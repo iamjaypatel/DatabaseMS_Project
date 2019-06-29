@@ -1,0 +1,1 @@
+-- sample data (must have at least 3 stores, 20 customers, 50 purchases)

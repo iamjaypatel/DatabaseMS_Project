@@ -10,3 +10,17 @@
 --
 -- points_change = points_added - points_spent
 -- (BuyCoffee->Purchase->Customer.Total_Points) += points_change
+
+CREATE OR REPLACE FUNCTION total_pts() RETURNS TRIGGER AS
+$$
+BEGIN
+
+END;
+$$ LANGUAGE PLPGSQL;
+
+DROP TRIGGER IF EXISTS total_pts_trig ON boutique_coffee.customer;
+CREATE TRIGGER total_pts_trig
+    AFTER UPDATE
+    ON boutique_coffee.purchase
+    FOR EACH ROW
+EXECUTE PROCEDURE total_pts();

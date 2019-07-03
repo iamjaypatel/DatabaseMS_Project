@@ -12,64 +12,64 @@ VALUES (DEFAULT,'Arriviste Coffee Bar', '5730 Ellsworth Ave', 'Coffee', '80.23',
 
 -- CUSTOMERS
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Jerimiah', 'Heath', 'Heath.Jerimiah@boutiquecoffee.com' );
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Weston', 'Riggs', 'Riggs.Weston@boutiquecoffee.com' );
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Cyrus', 'Rangel', 'Rangel.Cyrus@boutiquecoffee.com' );
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Alberto', 'Hansen', 'Hansen.Alberto@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Roberto', 'Mooney', 'Mooney.Roberto@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Lucy', 'Mcclain', 'Mcclain.Lucy@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Leah', 'Roberson', 'Roberson.Leah@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Jorge', 'Frank', 'Frank.Jorge@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Hanna', 'Belvins', 'Belvins.Hanna@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'India', 'Byrd', 'Byrd.India@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Danika', 'Robbins', 'Robbins.Danika@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Urijah', 'Ochoa', 'Ochoa.Urijah@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT,'Emely', 'Carney', 'Carney.Emely@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Rene', 'Fletcher', 'Fletcher.Rene@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Janiya', 'Terrell', 'Terrell.Janiya@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Allen', 'Hood', 'Hood.Allen@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Luna', 'Martin', 'Martin.Luna@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Simon', 'Lucero', 'Lucero.Simon@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Edith', 'Rollins', 'Rollins.Edith@boutiquecoffee.com');
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Kyler', 'Gilbert', 'Gilbert.Kyler@boutiquecoffee.com');
 
 -- PURCHASES
 INSERT INTO boutique_coffee.purchase(purchase_id, customer_id, store_id, purchase_time)

@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS boutique_coffee.Coffee CASCADE;
 DROP TABLE IF EXISTS boutique_coffee.Store CASCADE;
 
 DROP SCHEMA IF EXISTS boutique_coffee;
+
 CREATE SCHEMA boutique_coffee;
 
 CREATE TABLE boutique_coffee.Store

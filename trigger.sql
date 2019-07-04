@@ -10,7 +10,7 @@
 --
 -- points_change = points_added - points_spent
 -- (BuyCoffee->Purchase->Customer.Total_Points) += points_change
-CREATE FUNCTION points_change() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION points_change() RETURNS TRIGGER AS $$
     DECLARE
         boost FLOAT;
         rewards INT;
@@ -57,6 +57,7 @@ CREATE FUNCTION points_change() RETURNS TRIGGER AS $$
     END;
     $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER adjust_points
+DROP TRIGGER IF EXISTS adjust_points_insert ON boutique_coffee.buycoffee;
+CREATE TRIGGER adjust_points_insert
     AFTER INSERT ON boutique_coffee.buycoffee
-        FOR EACH ROW EXECUTE PROCEDURE points_change(NEW);
+        FOR EACH ROW EXECUTE PROCEDURE points_change();

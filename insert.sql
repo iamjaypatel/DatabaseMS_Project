@@ -1,6 +1,6 @@
 -- sample data (must have at least 3 stores, 20 customers, 50 purchases)
 
--- STORES INSERTS
+-- STORE TABLE
 INSERT INTO boutique_coffee.Store (Store_ID, Name, Address, Store_Type, GPS_Long, GPS_Lat)
 VALUES (DEFAULT, 'Starbucks', '4022 Fifth Ave', 'Coffee', '37.3', '20.8');
 
@@ -10,7 +10,7 @@ VALUES (DEFAULT, 'Crazy Mohca', '207 Oakland Ave', 'Coffee', '22.20', '45.01');
 INSERT INTO boutique_coffee.Store (Store_ID, Name, Address, Store_Type, GPS_Long, GPS_Lat)
 VALUES (DEFAULT, 'Arriviste Coffee Bar', '5730 Ellsworth Ave', 'Coffee', '80.23', '85.85');
 
--- MEMBER LEVEL INSERTS
+-- MEMBER LEVEL TABLE
 INSERT INTO boutique_coffee.memberlevel(memberlevel_id, name, booster_factor)
 VALUES (DEFAULT, 'Regular', .35);
 
@@ -24,7 +24,7 @@ INSERT INTO boutique_coffee.memberlevel(memberlevel_id, name, booster_factor)
 VALUES (DEFAULT, 'Diamond', 1.89);
 
 
--- CUSTOMERS INSERTS
+-- CUSTOMERS TABLE
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
 VALUES (DEFAULT, 'Jerimiah', 'Heath', 'HJ234@coffee.com', 1, 10);
 
@@ -85,7 +85,7 @@ VALUES (DEFAULT, 'Edith', 'Rollins', 'RE603@coffee.com', 4, 97);
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
 VALUES (DEFAULT, 'Kyler', 'Gilbert', 'GK161@coffee.com', 3, 21);
 
--- PURCHASES
+-- PURCHASE TABLE
 INSERT INTO boutique_coffee.purchase(purchase_id, customer_id, store_id, purchase_time)
 VALUES (DEFAULT, 1, 1, '06/30/2019');
 
@@ -235,3 +235,75 @@ VALUES (DEFAULT, 19, 3, '07/03/2019');
 
 INSERT INTO boutique_coffee.purchase(purchase_id, customer_id, store_id, purchase_time)
 VALUES (DEFAULT, 20, 3, '07/03/2019');
+
+-- COFFEE TABLE
+INSERT INTO boutique_coffee.coffee(coffee_id, name, description, intensity, price, reward_points, redeem_points)
+VALUES (DEFAULT, 'Caffe Misto', 'Brewed Coffee w/Milk');
+
+INSERT INTO boutique_coffee.coffee(coffee_id, name, description, intensity, price, reward_points, redeem_points)
+VALUES (DEFAULT,'Iced Coffee', 'Ice Brewed Coffee');
+
+INSERT INTO boutique_coffee.coffee(coffee_id, name, description, intensity, price, reward_points, redeem_points)
+VALUES (DEFAULT,'White Mocha');
+
+INSERT INTO boutique_coffee.coffee(coffee_id, name, description, intensity, price, reward_points, redeem_points)
+VALUES (DEFAULT,' Wild Cherry Mocha');
+
+INSERT INTO boutique_coffee.coffee(coffee_id, name, description, intensity, price, reward_points, redeem_points)
+VALUES (DEFAULT,);
+
+INSERT INTO boutique_coffee.coffee(coffee_id, name, description, intensity, price, reward_points, redeem_points)
+VALUES (DEFAULT,);
+
+-- PROMOTION TABLE
+INSERT INTO boutique_coffee.promotion(promotion_id, name, start_date, end_date)
+VALUES (DEFAULT,);
+
+INSERT INTO boutique_coffee.promotion(promotion_id, name, start_date, end_date)
+VALUES (DEFAULT,);
+
+INSERT INTO boutique_coffee.promotion(promotion_id, name, start_date, end_date)
+VALUES (DEFAULT,);
+
+-- OFFER COFFEE TABLE
+INSERT INTO boutique_coffee.offercoffee(store_id, coffee_id)
+VALUES (1, 1);
+
+INSERT INTO boutique_coffee.offercoffee(store_id, coffee_id)
+VALUES (1, 2);
+
+INSERT INTO boutique_coffee.offercoffee(store_id, coffee_id)
+VALUES (2, 3);
+
+INSERT INTO boutique_coffee.offercoffee(store_id, coffee_id)
+VALUES (2, 4);
+
+INSERT INTO boutique_coffee.offercoffee(store_id, coffee_id)
+VALUES (3, 5);
+
+INSERT INTO boutique_coffee.offercoffee(store_id, coffee_id)
+VALUES (3, 6);
+
+-- HAS PROMOTION TABLE
+INSERT INTO boutique_coffee.haspromotion(store_id, promotion_id)
+VALUES (1, 1);
+
+INSERT INTO boutique_coffee.haspromotion(store_id, promotion_id)
+VALUES (2, 2);
+
+INSERT INTO boutique_coffee.haspromotion(store_id, promotion_id)
+VALUES (3, 3);
+
+-- PROMOTE FOR TABLE
+INSERT INTO boutique_coffee.promotefor(promotion_id, coffee_id)
+VALUES (1,);
+
+INSERT INTO boutique_coffee.promotefor(promotion_id, coffee_id)
+VALUES (2,);
+
+INSERT INTO boutique_coffee.promotefor(promotion_id, coffee_id)
+VALUES (3,);
+
+-- BUY COFFEE TABLE
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES ();

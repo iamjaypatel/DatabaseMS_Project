@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS boutique_coffee.Promotion CASCADE;
 DROP TABLE IF EXISTS boutique_coffee.Coffee CASCADE;
 DROP TABLE IF EXISTS boutique_coffee.Store CASCADE;
 
-DROP SCHEMA IF EXISTS boutique_coffee;
+DROP SCHEMA IF EXISTS boutique_coffee CASCADE;
 
 CREATE SCHEMA boutique_coffee;
 

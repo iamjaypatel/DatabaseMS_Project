@@ -5,10 +5,10 @@ INSERT INTO boutique_coffee.Store (Store_ID, Name, Address, Store_Type, GPS_Long
 VALUES (DEFAULT, 'Starbucks', '4022 Fifth Ave', 'Coffee', '37.3', '20.8');
 
 INSERT INTO boutique_coffee.Store (Store_ID, Name, Address, Store_Type, GPS_Long, GPS_Lat)
-VALUES (DEFAULT, 'Crazy Mohca', '207 Oakland Ave', 'Coffee', '22.20', '45.01');
+VALUES (DEFAULT, 'Dunkin', '3907 Forbes Ave', 'Coffee', '22.20', '45.01');
 
 INSERT INTO boutique_coffee.Store (Store_ID, Name, Address, Store_Type, GPS_Long, GPS_Lat)
-VALUES (DEFAULT, 'Arriviste Coffee Bar', '5730 Ellsworth Ave', 'Coffee', '80.23', '85.85');
+VALUES (DEFAULT, 'Crazy Mocha', '207 Oakland Ave', 'Coffee', '80.23', '85.85');
 
 -- MEMBER LEVEL TABLE
 INSERT INTO boutique_coffee.memberlevel(memberlevel_id, name, booster_factor)
@@ -238,32 +238,32 @@ VALUES (DEFAULT, 20, 3, '07/03/2019');
 
 -- COFFEE TABLE
 INSERT INTO boutique_coffee.coffee(coffee_id, name, description, intensity, price, reward_points, redeem_points)
-VALUES (DEFAULT, 'Caffe Misto', 'Brewed Coffee w/Milk');
+VALUES (DEFAULT, 'Caffe Misto', 'Brewed Coffee w/Milk', 5, 3.95, 35, 50);
 
 INSERT INTO boutique_coffee.coffee(coffee_id, name, description, intensity, price, reward_points, redeem_points)
-VALUES (DEFAULT,'Iced Coffee', 'Ice Brewed Coffee');
+VALUES (DEFAULT, 'Iced Coffee', 'Ice Brewed Coffee', 3, 4.95, 45, 60);
 
 INSERT INTO boutique_coffee.coffee(coffee_id, name, description, intensity, price, reward_points, redeem_points)
-VALUES (DEFAULT,'White Mocha');
+VALUES (DEFAULT, 'OG. Blend Vanilla', 'Vanilla flavor', 5, 2.99, 20, 35);
 
 INSERT INTO boutique_coffee.coffee(coffee_id, name, description, intensity, price, reward_points, redeem_points)
-VALUES (DEFAULT,' Wild Cherry Mocha');
+VALUES (DEFAULT, 'Dark Roast Mocha', 'Dark Roase w/ Mocha', 7, 4.99, 50, 65);
 
 INSERT INTO boutique_coffee.coffee(coffee_id, name, description, intensity, price, reward_points, redeem_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Regular Coffee', 'Coffee Blend', 6, 5.49, 55, 70);
 
 INSERT INTO boutique_coffee.coffee(coffee_id, name, description, intensity, price, reward_points, redeem_points)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Ice Coffee', 'Iced Coffee', 2, 3.49, 15, 30);
 
 -- PROMOTION TABLE
 INSERT INTO boutique_coffee.promotion(promotion_id, name, start_date, end_date)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Caffe Misto Deal', '06/01/2019', '07/20/2019');
 
 INSERT INTO boutique_coffee.promotion(promotion_id, name, start_date, end_date)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'DR Mocha Deal', '06/10/2019', '07/25/2019');
 
 INSERT INTO boutique_coffee.promotion(promotion_id, name, start_date, end_date)
-VALUES (DEFAULT,);
+VALUES (DEFAULT, 'Ice Coffee Deal', '06/25/2019', '07/25/2019');
 
 -- OFFER COFFEE TABLE
 INSERT INTO boutique_coffee.offercoffee(store_id, coffee_id)
@@ -296,13 +296,13 @@ VALUES (3, 3);
 
 -- PROMOTE FOR TABLE
 INSERT INTO boutique_coffee.promotefor(promotion_id, coffee_id)
-VALUES (1,);
+VALUES (1, 1);
 
 INSERT INTO boutique_coffee.promotefor(promotion_id, coffee_id)
-VALUES (2,);
+VALUES (2, 4);
 
 INSERT INTO boutique_coffee.promotefor(promotion_id, coffee_id)
-VALUES (3,);
+VALUES (3, 6);
 
 -- BUY COFFEE TABLE
 INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)

@@ -306,4 +306,151 @@ VALUES (3, 6);
 
 -- BUY COFFEE TABLE
 INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
-VALUES ();
+VALUES (1, 1, 2, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (2, 2, 3, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (3, 1, 5, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (4, 2, 4, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (5, 1, 1, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (6, 2, 4, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (7, 3, 1, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (8, 4, 5, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (9, 3, 4, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (10, 4, 2, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (11, 3, 3, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (12, 4, 2, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (13, 5, 2, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (14, 6, 1, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (15, 5, 4, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (16, 6, 5, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (17, 5, 5, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (18, 6, 2, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (19, 1, 1, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (20, 2, 2, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (21, 3, 3, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (22, 4, 2, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (23, 3, 1, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (24, 4, 4, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (25, 3, 5, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (26, 4, 4, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (27, 5, 2, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (28, 6, 1, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (29, 5, 3, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (30, 6, 4, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (31, 5, 5, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (32, 6, 2, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (33, 1, 5, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (34, 2, 3, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (35, 1, 2, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (36, 2, 1, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (37, 1, 4, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (38, 1, 5, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (39, 4, 6, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (40, 4, 2, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (41, 5, 1, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (42, 6, 3, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (43, 6, 4, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (44, 1, 1, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (45, 2, 2, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (46, 1, 5, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (47, 4, 6, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (48, 3, 4, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (49, 6, 2, 1);
+
+INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
+VALUES (50, 6, 3, 1);

@@ -9,7 +9,7 @@
 --
 -- points_change = points_added - points_spent
 -- (BuyCoffee->Purchase->Customer.Total_Points) += points_change
-CREATE OR REPLACE FUNCTION points_change() RETURNS TRIGGER AS
+CREATE OR REPLACE FUNCTION boutique_coffee.points_change() RETURNS TRIGGER AS
 $$
 DECLARE
     boost      FLOAT;
@@ -31,7 +31,7 @@ BEGIN
     SELECT c.reward_points, c.redeem_points
     INTO rewards, redeems
     FROM (SELECT NEW.*) i
-         NATURAL INNER JOIN boutique_coffee.coffee AS c;
+             NATURAL INNER JOIN boutique_coffee.coffee AS c;
 
     SELECT count(promo.coffee_id)
     INTO isPromoted
@@ -40,7 +40,8 @@ BEGIN
              NATURAL INNER JOIN boutique_coffee.haspromotion
              NATURAL INNER JOIN boutique_coffee.promotefor as promo
              NATURAL INNER JOIN boutique_coffee.promotion as p
-             WHERE purch.purchase_time < p.end_date AND purch.purchase_time > p.start_date;
+    WHERE purch.purchase_time < p.end_date
+      AND purch.purchase_time > p.start_date;
 
     -- compute change in points
     added := (NEW.purchase_quantity * rewards * boost);
@@ -68,4 +69,4 @@ CREATE TRIGGER adjust_points_insert
     AFTER INSERT
     ON boutique_coffee.buycoffee
     FOR EACH ROW
-EXECUTE PROCEDURE points_change();
+EXECUTE PROCEDURE boutique_coffee.points_change();

@@ -1,15 +1,4 @@
 -- set up schema and tables for project
-DROP TABLE IF EXISTS boutique_coffee.BuyCoffee CASCADE;
-DROP TABLE IF EXISTS boutique_coffee.PromoteFor CASCADE;
-DROP TABLE IF EXISTS boutique_coffee.HasPromotion CASCADE;
-DROP TABLE IF EXISTS boutique_coffee.OfferCoffee CASCADE;
-DROP TABLE IF EXISTS boutique_coffee.Purchase CASCADE;
-DROP TABLE IF EXISTS boutique_coffee.Customer CASCADE;
-DROP TABLE IF EXISTS boutique_coffee.MemberLevel CASCADE;
-DROP TABLE IF EXISTS boutique_coffee.Promotion CASCADE;
-DROP TABLE IF EXISTS boutique_coffee.Coffee CASCADE;
-DROP TABLE IF EXISTS boutique_coffee.Store CASCADE;
-
 DROP SCHEMA IF EXISTS boutique_coffee CASCADE;
 
 CREATE SCHEMA boutique_coffee;

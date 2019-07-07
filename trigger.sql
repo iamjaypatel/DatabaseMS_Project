@@ -19,25 +19,28 @@ DECLARE
     added      FLOAT;
     delta      INT;
 BEGIN
+
     -- get necessary values for computation
     SELECT m.booster_factor
     INTO boost
-    FROM NEW
+    FROM (SELECT NEW.*) i
              NATURAL INNER JOIN boutique_coffee.purchase
              NATURAL INNER JOIN boutique_coffee.customer
              NATURAL INNER JOIN boutique_coffee.memberlevel AS m;
 
     SELECT c.reward_points, c.redeem_points
     INTO rewards, redeems
-    FROM NEW
-             NATURAL INNER JOIN boutique_coffee.coffee AS c;
+    FROM (SELECT NEW.*) i
+         NATURAL INNER JOIN boutique_coffee.coffee AS c;
 
     SELECT count(promo.coffee_id)
     INTO isPromoted
-    FROM NEW
-             NATURAL INNER JOIN boutique_coffee.purchase
+    FROM (SELECT NEW.*) i
+             NATURAL INNER JOIN boutique_coffee.purchase as purch
              NATURAL INNER JOIN boutique_coffee.haspromotion
-             NATURAL INNER JOIN boutique_coffee.promotefor as promo;
+             NATURAL INNER JOIN boutique_coffee.promotefor as promo
+             NATURAL INNER JOIN boutique_coffee.promotion as p
+             WHERE purch.purchase_time < p.end_date AND purch.purchase_time > p.start_date;
 
     -- compute change in points
     added := (NEW.purchase_quantity * rewards * boost);
@@ -52,7 +55,7 @@ BEGIN
     -- update table with requisite data
     UPDATE boutique_coffee.customer AS c
     SET total_points = total_points + delta
-    FROM NEW
+    FROM (SELECT NEW.*) i
              NATURAL INNER JOIN boutique_coffee.purchase as p
     WHERE p.customer_id = c.customer_id;
 

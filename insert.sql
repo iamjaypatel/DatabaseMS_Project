@@ -366,13 +366,13 @@ INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity,
 VALUES (20, 2, 2, 1);
 
 INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
-VALUES (21, 3, 3, 1);
+VALUES (21, 3, 3, 0); -- Changed redeem to 0, not enough points exception thrown
 
 INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
 VALUES (22, 4, 2, 1);
 
 INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
-VALUES (23, 3, 1, 1);
+VALUES (23, 3, 1, 0); -- Changed redeem to 0, not enough points exception thrown
 
 INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
 VALUES (24, 4, 4, 1);
@@ -411,7 +411,7 @@ INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity,
 VALUES (35, 1, 2, 1);
 
 INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
-VALUES (36, 2, 1, 1);
+VALUES (36, 2, 1, 0); -- Changed redeem to 0, not enough points exception thrown
 
 INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
 VALUES (37, 1, 4, 1);
@@ -426,7 +426,7 @@ INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity,
 VALUES (40, 4, 2, 1);
 
 INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
-VALUES (41, 5, 1, 1);
+VALUES (41, 5, 1, 0);
 
 INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
 VALUES (42, 6, 3, 1);

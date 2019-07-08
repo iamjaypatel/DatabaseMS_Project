@@ -18,6 +18,8 @@ DECLARE
     isPromoted INT;
     added      FLOAT;
     delta      INT;
+    prev       INT;
+    customer   INT;
 BEGIN
 
     -- get necessary values for computation
@@ -45,19 +47,35 @@ BEGIN
     -- compute change in points
     added := (NEW.purchase_quantity * rewards * boost);
 
+    SELECT c.total_points
+    INTO prev
+    FROM (SELECT NEW.*) i
+        NATURAL INNER JOIN boutique_coffee.customer as c;
+
     IF isPromoted > 0 THEN
         added := added * 2;
     END IF;
 
     delta := CAST(added as INT) - (NEW.redeem_quantity * redeems);
 
+    IF delta < -1 * prev THEN
+        SELECT p.customer_id
+        INTO customer
+        FROM (SELECT NEW.*) i
+            NATURAL INNER JOIN boutique_coffee.purchase as p;
+
+        RAISE EXCEPTION USING
+            errcode = 'PTLOW',
+            message = FORMAT('Purchase %s of coffee %s requires that customer %s spend %s points, but they only have %s', NEW.purchase_id, NEW.coffee_id, customer, delta, prev),
+            hint = 'reduce the value of the Redeem_Quantity column';
+    END IF;
 
     -- update table with requisite data
     UPDATE boutique_coffee.customer AS c
     SET total_points = total_points + delta
     FROM (SELECT NEW.*) i
              NATURAL INNER JOIN boutique_coffee.purchase as p
-    WHERE p.customer_id = c.customer_id;
+             where c.customer_id = p.customer_id;
 
     RETURN NEW;
 END;

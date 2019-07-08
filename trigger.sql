@@ -59,7 +59,7 @@ BEGIN
 
     delta := CAST(added as INT) - (NEW.redeem_quantity * redeems);
 
-    IF delta < -1 * prev THEN
+    IF -1 * delta > prev THEN
         SELECT p.customer_id
         INTO customer
         FROM (SELECT NEW.*) i
@@ -67,7 +67,7 @@ BEGIN
 
         RAISE EXCEPTION USING
             errcode = 'PTLOW',
-            message = FORMAT('Purchase %s of coffee %s requires that customer %s spend %s points, but they only have %s', NEW.purchase_id, NEW.coffee_id, customer, delta, prev),
+            message = FORMAT('Customer must spend %s points, but they only have %s', -1 * delta, prev),
             hint = 'reduce the value of the Redeem_Quantity column';
     END IF;
 

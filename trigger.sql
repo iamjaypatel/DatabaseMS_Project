@@ -51,6 +51,7 @@ BEGIN
     SELECT c.total_points
     INTO prev
     FROM (SELECT NEW.*) i
+             NATURAL INNER JOIN boutique_coffee.purchase
              NATURAL INNER JOIN boutique_coffee.customer as c;
 
     IF isPromoted > 0 THEN
@@ -60,10 +61,6 @@ BEGIN
     delta := CAST(added as INT) - (NEW.redeem_quantity * redeems);
 
     IF -1 * delta > prev THEN
-        SELECT p.customer_id
-        INTO customer
-        FROM (SELECT NEW.*) i
-                 NATURAL INNER JOIN boutique_coffee.purchase as p;
 
         RAISE EXCEPTION USING
             errcode = 'PTLOW',
@@ -76,7 +73,7 @@ BEGIN
     SET total_points = total_points + delta
     FROM (SELECT NEW.*) i
              NATURAL INNER JOIN boutique_coffee.purchase as p
-    where c.customer_id = p.customer_id;
+             WHERE c.customer_id = p.customer_id;
 
     RETURN NEW;
 END;

@@ -147,7 +147,7 @@ class BoutiqueCoffee implements ITransactionManager
 	public int addPurchase(int customerId, int storeId, Date purchaseTime, List<Integer> coffeeIds,
 			List<Integer> purchaseQuantities, List<Integer> redeemQuantities) {
 		
-		beginTransaction();
+		beginTransaction(Connection.TRANSACTION_SERIALIZABLE);
 		int id = -1;
 		String purchaseString = "INSERT INTO boutique_coffee.purchase(customer_id, store_id, purchase_time) VALUES (?, ?, ?)";
 		String coffeeString = "INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity) VALUES (?, ?, ?, ?)";
@@ -279,6 +279,8 @@ class BoutiqueCoffee implements ITransactionManager
 		LinkedList<Integer> results = new LinkedList<Integer>();
 		String queryString = "SELECT store_id FROM boutique_coffee.top_stores(?, ?)";
 		
+		beginTransaction(Connection.TRANSACTION_SERIALIZABLE);
+		
 		try {
 			PreparedStatement stmt = conn.prepareStatement(queryString);
 			stmt.setInt(1, k);
@@ -291,11 +293,14 @@ class BoutiqueCoffee implements ITransactionManager
 			}
 		} catch(SQLException e) {
 			logException(e);
-			results = new LinkedList<Integer>();
+			rollback();
+			return new LinkedList<Integer>();
 		} catch(Exception e) {
-			results = new LinkedList<Integer>();
+			rollback();
+			return new LinkedList<Integer>();
 		}
 		
+		commit();
 		return results;
 	}
 
@@ -304,6 +309,8 @@ class BoutiqueCoffee implements ITransactionManager
 		LinkedList<Integer> results = new LinkedList<Integer>();
 		String queryString = "SELECT customer_id FROM boutique_coffee.top_customers(?, ?)";
 		
+		beginTransaction(Connection.TRANSACTION_SERIALIZABLE);
+		
 		try {
 			PreparedStatement stmt = conn.prepareStatement(queryString);
 			stmt.setInt(1, k);
@@ -316,11 +323,14 @@ class BoutiqueCoffee implements ITransactionManager
 			}
 		} catch(SQLException e) {
 			logException(e);
-			results = new LinkedList<Integer>();
+			rollback();
+			return new LinkedList<Integer>();
 		} catch(Exception e) {
-			results = new LinkedList<Integer>();
+			rollback();
+			return new LinkedList<Integer>();
 		}
 		
+		commit();
 		return results;
 	}
 	
@@ -347,8 +357,13 @@ class BoutiqueCoffee implements ITransactionManager
 	}
 	
 	private void beginTransaction() {
+		beginTransaction(Connection.TRANSACTION_READ_COMMITTED);
+	}
+	
+	private void beginTransaction(int isolation_level) {
 		try {
 			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(isolation_level);
 		} catch (SQLException e) {
 			logException(e);
 		}
@@ -371,6 +386,5 @@ class BoutiqueCoffee implements ITransactionManager
 		} catch (SQLException e) {
 			logException(e);
 		}
-	}
-	
+	}	
 }

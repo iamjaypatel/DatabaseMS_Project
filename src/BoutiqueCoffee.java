@@ -104,7 +104,7 @@ class BoutiqueCoffee implements ITransactionManager
 			int rows = stmt.executeUpdate();
 			
 			if(rows == 0) {
-				throw new SQLException("Add Coffee Failed, no rows affected");
+				throw new SQLException("Add Promotion Failed, no rows affected");
 			}
 			
 			ResultSet values = stmt.getGeneratedKeys();
@@ -148,8 +148,60 @@ class BoutiqueCoffee implements ITransactionManager
 	@Override
 	public int addPurchase(int customerId, int storeId, Date purchaseTime, List<Integer> coffeeIds,
 			List<Integer> purchaseQuantities, List<Integer> redeemQuantities) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		beginTransaction();
+		int id = -1;
+		LinkedList<Integer> results = new LinkedList<Integer>();
+		String purchaseString = "INSERT INTO boutique_coffee.purchase(customer_id, store_id, purchase_time) VALUES (?, ?, ?)";
+		String coffeeString = "INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity) VALUES (?, ?, ?, ?)";
+		String fieldName = "purchase_id";
+		PreparedStatement stmt;
+		try {
+			stmt = conn.prepareStatement(purchaseString, new String[] {fieldName});
+			stmt.setInt(1, customerId);
+			stmt.setInt(2, storeId);
+			stmt.setDate(3, purchaseTime);
+			int rows = stmt.executeUpdate();
+			
+			if(rows == 0) {
+				throw new SQLException("Add Purchase Failed, no rows affected in purchase table");
+			}
+			
+			ResultSet values = stmt.getGeneratedKeys();
+			if(values.next()) {
+				id = values.getInt(1);
+			}
+			
+			if (coffeeIds.size() != purchaseQuantities.size() || coffeeIds.size() != purchaseQuantities.size()) {
+				throw new SQLException("Add Purchase Failed, array inputs are different sizes");
+			}
+			
+			for(int i = 0; i < coffeeIds.size(); i++) {
+				stmt = conn.prepareStatement(coffeeString);
+				stmt.setInt(1, id);
+				stmt.setInt(2, coffeeIds.get(i));
+				stmt.setInt(3, purchaseQuantities.get(i));
+				stmt.setInt(4, redeemQuantities.get(i));
+				rows = stmt.executeUpdate();
+				
+				if(rows == 0) {
+					throw new SQLException("Add Purchase Failed, no rows affected in buyCoffee table");
+				}
+			}
+			
+			
+		} catch(SQLException e) {
+			logException(e);
+			rollback();
+			return -1;
+			
+		} catch(Exception e) {
+			rollback();
+			return -1;
+		}
+		
+		commit();
+		return id;
 	}
 
 	@Override
@@ -296,4 +348,32 @@ class BoutiqueCoffee implements ITransactionManager
 			// do nothing
 		}
 	}
+	
+	private void beginTransaction() {
+		try {
+			conn.setAutoCommit(false);
+		} catch (SQLException e) {
+			logException(e);
+		}
+	}
+	
+	private void commit() {
+		try {
+			conn.commit();
+			conn.setAutoCommit(true);
+		} catch (SQLException e) {
+			logException(e);
+		}
+		
+	}
+	
+	private void rollback() {
+		try {
+			conn.rollback();
+			conn.setAutoCommit(true);
+		} catch (SQLException e) {
+			logException(e);
+		}
+	}
+	
 }

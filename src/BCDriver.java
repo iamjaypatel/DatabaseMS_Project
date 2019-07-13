@@ -1,4 +1,5 @@
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BCDriver {
@@ -21,6 +22,7 @@ public class BCDriver {
 		
 		test_addCoffee();
 		test_addPromotion();
+		test_addPurchase();
 		
 		test_topStores();
 		test_topCustomers();
@@ -66,7 +68,24 @@ public class BCDriver {
 		System.out.println(id);
 	}
 	
-	
+	private static void test_addPurchase() {
+		System.out.println("\n--- ADD PURCHASE ---");
+		Date d = Date.valueOf("2019-05-15");
+		List<Integer> coffees = new ArrayList<Integer>(2);
+		List<Integer> purchased = new ArrayList<Integer>(2);
+		List<Integer> redeemed = new ArrayList<Integer>(2);
+		
+		coffees.add(1);
+		purchased.add(5);
+		redeemed.add(0);
+		
+		coffees.add(2);
+		purchased.add(25);
+		redeemed.add(0);
+		
+		int id = db.addPurchase(1, 1, d, coffees, purchased, redeemed);
+		System.out.println(id);
+	}
 	
 	private static void test_topStores() {
 		for(int[] args : new int[][] {{1, 1}, {3, 1}, {3, 3}}) {

@@ -1,8 +1,33 @@
-import java.util.Date;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
-class PostgresTransactionManager implements ITransactionManager
+class BoutiqueCoffee implements ITransactionManager
 {
+	private Connection conn;
+	
+	public BoutiqueCoffee(String url, String username, String password) throws SQLException, ClassNotFoundException {
+		// verify that postgresql driver is available
+		Class.forName("org.postgresql.Driver");
+		
+		// create connnection to the database
+		Properties props = new Properties();
+		props.setProperty("user", username);
+		props.setProperty("password", password);
+		conn = DriverManager.getConnection(url, props);
+	}
+	
+	public BoutiqueCoffee(String username, String password) throws SQLException, ClassNotFoundException {
+		this("jdbc:postgresql://localhost/postgres", username, password);
+	}
+	
+	// TRANSACTIONS
 
 	@Override
 	public int addStore(String name, String address, String storeType, double gpsLong, double gpsLat) {
@@ -62,8 +87,21 @@ class PostgresTransactionManager implements ITransactionManager
 
 	@Override
 	public List<Integer> getCoffees() {
-		// TODO Auto-generated method stub
-		return null;
+		LinkedList<Integer> results = new LinkedList();
+		String queryString = "SELECT coffee_id FROM boutique_coffee.coffee";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(queryString);
+			ResultSet values = stmt.executeQuery();
+			
+			while(values.next()) {
+				int id = values.getInt("coffee_id");
+				results.add(id);
+			}
+		} catch(Exception e) {
+			return new LinkedList();
+		}
+		
+		return results;
 	}
 
 	@Override

@@ -1,3 +1,4 @@
+import java.sql.Date;
 import java.util.List;
 
 public class BCDriver {
@@ -17,7 +18,10 @@ public class BCDriver {
 		test_getCoffees();
 		test_getCoffeesByKeyword();
 		test_getPointsByCustomerId();
+		
 		test_addCoffee();
+		test_addPromotion();
+		
 		test_topStores();
 		test_topCustomers();
 	}
@@ -53,6 +57,16 @@ public class BCDriver {
 		int id = db.addCoffee("Ultra Dark Roast", "Extra Black", 11, 7.79, 80, 100);
 		System.out.println(id);
 	}
+	
+	private static void test_addPromotion() {
+		System.out.println("\n--- ADD PROMOTION 'Double Points'");
+		Date start = Date.valueOf("2019-07-01");
+		Date end = Date.valueOf("2019-07-28");
+		int id = db.addPromotion("Darker is Better", start, end);
+		System.out.println(id);
+	}
+	
+	
 	
 	private static void test_topStores() {
 		for(int[] args : new int[][] {{1, 1}, {3, 1}, {3, 3}}) {

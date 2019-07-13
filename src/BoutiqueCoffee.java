@@ -91,8 +91,34 @@ class BoutiqueCoffee implements ITransactionManager
 
 	@Override
 	public int addPromotion(String name, Date startDate, Date endDate) {
-		// TODO Auto-generated method stub
-		return 0;
+		int id = -1;
+		LinkedList<Integer> results = new LinkedList<Integer>();
+		String queryString = "INSERT INTO boutique_coffee.promotion(name, start_date, end_date) VALUES (?, ?, ?)";
+		String fieldName = "promotion_id";
+		PreparedStatement stmt;
+		try {
+			stmt = conn.prepareStatement(queryString, new String[] {fieldName});
+			stmt.setString(1, name);
+			stmt.setDate(2, startDate);
+			stmt.setDate(3, endDate);
+			int rows = stmt.executeUpdate();
+			
+			if(rows == 0) {
+				throw new SQLException("Add Coffee Failed, no rows affected");
+			}
+			
+			ResultSet values = stmt.getGeneratedKeys();
+			if(values.next()) {
+				id = values.getInt(1);
+			}
+		} catch(SQLException e) {
+			logException(e);
+			id = -1;
+		} catch(Exception e) {
+			id = -1;
+		}
+		
+		return id;
 	}
 
 	@Override

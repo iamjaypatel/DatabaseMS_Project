@@ -16,7 +16,7 @@ class BoutiqueCoffee implements ITransactionManager
 		// verify that postgresql driver is available
 		Class.forName("org.postgresql.Driver");
 		
-		// create connnection to the database
+		// create connection to the database
 		Properties props = new Properties();
 		props.setProperty("user", username);
 		props.setProperty("password", password);
@@ -87,7 +87,7 @@ class BoutiqueCoffee implements ITransactionManager
 
 	@Override
 	public List<Integer> getCoffees() {
-		LinkedList<Integer> results = new LinkedList();
+		LinkedList<Integer> results = new LinkedList<Integer>();
 		String queryString = "SELECT coffee_id FROM boutique_coffee.coffee";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(queryString);
@@ -98,7 +98,7 @@ class BoutiqueCoffee implements ITransactionManager
 				results.add(id);
 			}
 		} catch(Exception e) {
-			return new LinkedList();
+			return new LinkedList<Integer>();
 		}
 		
 		return results;

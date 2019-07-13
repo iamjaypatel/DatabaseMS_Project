@@ -2,6 +2,8 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -26,6 +28,7 @@ class BoutiqueCoffee implements ITransactionManager
 		
 		// no error logging by default
 		setErrorLogger(s -> {});
+		addProcedures();
 	}
 	
 	public BoutiqueCoffee(String username, String password) throws SQLException, ClassNotFoundException {
@@ -51,8 +54,9 @@ class BoutiqueCoffee implements ITransactionManager
 		LinkedList<Integer> results = new LinkedList<Integer>();
 		String queryString = "INSERT INTO boutique_coffee.coffee(name, description, intensity, price, reward_points, redeem_points) VALUES (?, ?, ?, ?, ?, ?)";
 		String fieldName = "coffee_id";
+		PreparedStatement stmt;
 		try {
-			PreparedStatement stmt = conn.prepareStatement(queryString, new String[] {fieldName});
+			stmt = conn.prepareStatement(queryString, new String[] {fieldName});
 			stmt.setString(1, name);
 			stmt.setString(2, description);
 			stmt.setInt(3, intensity);
@@ -71,6 +75,8 @@ class BoutiqueCoffee implements ITransactionManager
 			}
 		} catch(SQLException e) {
 			logException(e);
+			id = -1;
+		} catch(Exception e) {
 			id = -1;
 		}
 		
@@ -124,17 +130,20 @@ class BoutiqueCoffee implements ITransactionManager
 	public List<Integer> getCoffees() {
 		LinkedList<Integer> results = new LinkedList<Integer>();
 		String queryString = "SELECT coffee_id FROM boutique_coffee.coffee";
-		String fieldName = "coffee_id";
+		
 		try {
 			PreparedStatement stmt = conn.prepareStatement(queryString);
 			ResultSet values = stmt.executeQuery();
 			
 			while(values.next()) {
-				int id = values.getInt(fieldName);
+				int id = values.getInt(1);
 				results.add(id);
 			}
 		} catch(SQLException e) {
-			return new LinkedList<Integer>();
+			logException(e);
+			results = new LinkedList<Integer>();
+		} catch(Exception e) {
+			results = new LinkedList<Integer>();
 		}
 		
 		return results;
@@ -144,7 +153,7 @@ class BoutiqueCoffee implements ITransactionManager
 	public List<Integer> getCoffeesByKeywords(String keyword1, String keyword2) {
 		LinkedList<Integer> results = new LinkedList<Integer>();
 		String queryString = "SELECT coffee_id FROM boutique_coffee.coffee WHERE name LIKE ? AND name LIKE ?";
-		String fieldName = "coffee_id";
+		
 		try {
 			PreparedStatement stmt = conn.prepareStatement(queryString);
 			stmt.setString(1, "%%" + keyword1 + "%%");
@@ -152,7 +161,7 @@ class BoutiqueCoffee implements ITransactionManager
 			ResultSet values = stmt.executeQuery();
 			
 			while(values.next()) {
-				int id = values.getInt(fieldName);
+				int id = values.getInt(1);
 				results.add(id);
 			}
 		} catch(SQLException e) {
@@ -169,14 +178,14 @@ class BoutiqueCoffee implements ITransactionManager
 	public double getPointsByCustomerId(int customerId) {
 		double pts;
 		String queryString = "SELECT total_points FROM boutique_coffee.customer WHERE customer_id = ?";
-		String fieldName = "total_points";
+		
 		try {
 			PreparedStatement stmt = conn.prepareStatement(queryString);
 			stmt.setInt(1, customerId);
 			ResultSet values = stmt.executeQuery();
 			
 			if(values.next()) {
-				pts = values.getDouble(fieldName);
+				pts = values.getDouble(1);
 			}
 			else {
 				pts = -1;
@@ -192,14 +201,52 @@ class BoutiqueCoffee implements ITransactionManager
 
 	@Override
 	public List<Integer> getTopKStoresInPastXMonth(int k, int x) {
-		// TODO Auto-generated method stub
-		return null;
+		LinkedList<Integer> results = new LinkedList<Integer>();
+		String queryString = "SELECT store_id FROM boutique_coffee.top_stores(?, ?)";
+		
+		try {
+			PreparedStatement stmt = conn.prepareStatement(queryString);
+			stmt.setInt(1, k);
+			stmt.setInt(2, x);
+			ResultSet values = stmt.executeQuery();
+			
+			while(values.next()) {
+				int id = values.getInt(1);
+				results.add(id);
+			}
+		} catch(SQLException e) {
+			logException(e);
+			results = new LinkedList<Integer>();
+		} catch(Exception e) {
+			results = new LinkedList<Integer>();
+		}
+		
+		return results;
 	}
 
 	@Override
 	public List<Integer> getTopKCustomersInPastXMonth(int k, int x) {
-		// TODO Auto-generated method stub
-		return null;
+		LinkedList<Integer> results = new LinkedList<Integer>();
+		String queryString = "SELECT customer_id FROM boutique_coffee.top_customers(?, ?)";
+		
+		try {
+			PreparedStatement stmt = conn.prepareStatement(queryString);
+			stmt.setInt(1, k);
+			stmt.setInt(2, x);
+			ResultSet values = stmt.executeQuery();
+			
+			while(values.next()) {
+				int id = values.getInt(1);
+				results.add(id);
+			}
+		} catch(SQLException e) {
+			logException(e);
+			results = new LinkedList<Integer>();
+		} catch(Exception e) {
+			results = new LinkedList<Integer>();
+		}
+		
+		return results;
 	}
 	
 	private void logException(SQLException e) {
@@ -209,6 +256,18 @@ class BoutiqueCoffee implements ITransactionManager
 			error_logger.accept(e.getSQLState());
 			error_logger.accept("" + e.getErrorCode());
 			e = e.getNextException();
+		}
+	}
+	
+	private void addProcedures(){
+		try {
+			List<String> lines = Files.readAllLines(Paths.get("jdbc_procedures.sql"));
+		    String queryString = String.join("\n", lines.toArray(new String[0]));
+		    conn.prepareCall(queryString).execute();
+		} catch(SQLException e) {
+			logException(e);
+		} catch(Exception e) {
+			// do nothing
 		}
 	}
 }

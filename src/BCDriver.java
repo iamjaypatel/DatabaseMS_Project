@@ -18,6 +18,8 @@ public class BCDriver {
 		test_getCoffeesByKeyword();
 		test_getPointsByCustomerId();
 		test_addCoffee();
+		test_topStores();
+		test_topCustomers();
 	}
 	
 	private static void test_getCoffees() {
@@ -50,5 +52,25 @@ public class BCDriver {
 		System.out.println("\n--- ADD COFFEE 'Ultra Dark Roast'");
 		int id = db.addCoffee("Ultra Dark Roast", "Extra Black", 11, 7.79, 80, 100);
 		System.out.println(id);
+	}
+	
+	private static void test_topStores() {
+		for(int[] args : new int[][] {{1, 1}, {3, 1}, {3, 3}}) {
+			System.out.printf("\n--- TOP %d STORES IN PAST %d MONTHS (%d DAYS) ---\n", args[0], args[1], args[1] * 30);
+			List<Integer> stores = db.getTopKStoresInPastXMonth(args[0], args[1]);
+			for(int store : stores) {
+				System.out.println(store);
+			}
+		}
+	}
+	
+	private static void test_topCustomers() {
+		for(int[] args : new int[][] {{1, 5}, {1, 1}, {10, 1}}) {
+			System.out.printf("\n--- TOP %d CUSTOMERS IN PAST %d MONTHS (%d DAYS) ---\n", args[0], args[1], args[1] * 30);
+			List<Integer> customers = db.getTopKCustomersInPastXMonth(args[0], args[1]);
+			for(int customer : customers) {
+				System.out.println(customer);
+			}
+		}
 	}
 }

@@ -51,7 +51,6 @@ class BoutiqueCoffee implements ITransactionManager
 	public int addCoffee(String name, String description, int intensity, double price, double rewardPoints,
 			double redeemPoints) {
 		int id = -1;
-		LinkedList<Integer> results = new LinkedList<Integer>();
 		String queryString = "INSERT INTO boutique_coffee.coffee(name, description, intensity, price, reward_points, redeem_points) VALUES (?, ?, ?, ?, ?, ?)";
 		String fieldName = "coffee_id";
 		PreparedStatement stmt;
@@ -92,7 +91,6 @@ class BoutiqueCoffee implements ITransactionManager
 	@Override
 	public int addPromotion(String name, Date startDate, Date endDate) {
 		int id = -1;
-		LinkedList<Integer> results = new LinkedList<Integer>();
 		String queryString = "INSERT INTO boutique_coffee.promotion(name, start_date, end_date) VALUES (?, ?, ?)";
 		String fieldName = "promotion_id";
 		PreparedStatement stmt;
@@ -151,7 +149,6 @@ class BoutiqueCoffee implements ITransactionManager
 		
 		beginTransaction();
 		int id = -1;
-		LinkedList<Integer> results = new LinkedList<Integer>();
 		String purchaseString = "INSERT INTO boutique_coffee.purchase(customer_id, store_id, purchase_time) VALUES (?, ?, ?)";
 		String coffeeString = "INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity) VALUES (?, ?, ?, ?)";
 		String fieldName = "purchase_id";
@@ -234,8 +231,8 @@ class BoutiqueCoffee implements ITransactionManager
 		
 		try {
 			PreparedStatement stmt = conn.prepareStatement(queryString);
-			stmt.setString(1, "%%" + keyword1 + "%%");
-			stmt.setString(2, "%%" + keyword2 + "%%");
+			stmt.setString(1, "%" + keyword1 + "%");
+			stmt.setString(2, "%" + keyword2 + "%");
 			ResultSet values = stmt.executeQuery();
 			
 			while(values.next()) {

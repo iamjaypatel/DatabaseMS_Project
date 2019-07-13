@@ -47,8 +47,34 @@ class BoutiqueCoffee implements ITransactionManager
 	@Override
 	public int addCoffee(String name, String description, int intensity, double price, double rewardPoints,
 			double redeemPoints) {
-		// TODO Auto-generated method stub
-		return 0;
+		int id = -1;
+		LinkedList<Integer> results = new LinkedList<Integer>();
+		String queryString = "INSERT INTO boutique_coffee.coffee(name, description, intensity, price, reward_points, redeem_points) VALUES (?, ?, ?, ?, ?, ?)";
+		String fieldName = "coffee_id";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(queryString, new String[] {fieldName});
+			stmt.setString(1, name);
+			stmt.setString(2, description);
+			stmt.setInt(3, intensity);
+			stmt.setDouble(4, price);
+			stmt.setDouble(5, rewardPoints);
+			stmt.setDouble(6, redeemPoints);
+			int rows = stmt.executeUpdate();
+			
+			if(rows == 0) {
+				throw new SQLException("Add Coffee Failed, no rows affected");
+			}
+			
+			ResultSet values = stmt.getGeneratedKeys();
+			if(values.next()) {
+				id = values.getInt(1);
+			}
+		} catch(SQLException e) {
+			logException(e);
+			id = -1;
+		}
+		
+		return id;
 	}
 
 	@Override
@@ -117,10 +143,12 @@ class BoutiqueCoffee implements ITransactionManager
 	@Override
 	public List<Integer> getCoffeesByKeywords(String keyword1, String keyword2) {
 		LinkedList<Integer> results = new LinkedList<Integer>();
-		String queryString = "SELECT coffee_id FROM boutique_coffee.coffee";
+		String queryString = "SELECT coffee_id FROM boutique_coffee.coffee WHERE name LIKE ? AND name LIKE ?";
 		String fieldName = "coffee_id";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(queryString);
+			stmt.setString(1, "%%" + keyword1 + "%%");
+			stmt.setString(2, "%%" + keyword2 + "%%");
 			ResultSet values = stmt.executeQuery();
 			
 			while(values.next()) {

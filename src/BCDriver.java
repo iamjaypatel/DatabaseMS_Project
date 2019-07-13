@@ -12,7 +12,11 @@ public class BCDriver {
 			System.out.println(e.getMessage());
 		}
 		
+		db.setErrorLogger(s -> System.err.println(s));
+		
 		test_getCoffees();
+		test_getPointsByCustomerId();
+		
 		
 	}
 	
@@ -21,6 +25,14 @@ public class BCDriver {
 		List<Integer> coffees = db.getCoffees();
 		for (int coffee : coffees) {
 			System.out.println(coffee);
+		}
+	}
+	
+	private static void test_getPointsByCustomerId() {
+		for(int i : new int[] {1, -15}) {
+			System.out.printf("\n--- GET POINTS FOR CUSTOMER %s ---\n", i);
+			double pts = db.getPointsByCustomerId(i);
+			System.out.println(pts);
 		}
 	}
 }

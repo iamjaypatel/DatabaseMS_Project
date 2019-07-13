@@ -7,10 +7,12 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+import java.util.function.Consumer;
 
 class BoutiqueCoffee implements ITransactionManager
 {
 	private Connection conn;
+	private Consumer<String> error_logger;
 	
 	public BoutiqueCoffee(String url, String username, String password) throws SQLException, ClassNotFoundException {
 		// verify that postgresql driver is available
@@ -21,10 +23,17 @@ class BoutiqueCoffee implements ITransactionManager
 		props.setProperty("user", username);
 		props.setProperty("password", password);
 		conn = DriverManager.getConnection(url, props);
+		
+		// no error logging by default
+		setErrorLogger(s -> {});
 	}
 	
 	public BoutiqueCoffee(String username, String password) throws SQLException, ClassNotFoundException {
 		this("jdbc:postgresql://localhost/postgres", username, password);
+	}
+	
+	public void setErrorLogger(Consumer<String> error_logger) {
+		this.error_logger = error_logger;
 	}
 	
 	// TRANSACTIONS
@@ -89,15 +98,16 @@ class BoutiqueCoffee implements ITransactionManager
 	public List<Integer> getCoffees() {
 		LinkedList<Integer> results = new LinkedList<Integer>();
 		String queryString = "SELECT coffee_id FROM boutique_coffee.coffee";
+		String fieldName = "coffee_id";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(queryString);
 			ResultSet values = stmt.executeQuery();
 			
 			while(values.next()) {
-				int id = values.getInt("coffee_id");
+				int id = values.getInt(fieldName);
 				results.add(id);
 			}
-		} catch(Exception e) {
+		} catch(SQLException e) {
 			return new LinkedList<Integer>();
 		}
 		
@@ -106,14 +116,50 @@ class BoutiqueCoffee implements ITransactionManager
 
 	@Override
 	public List<Integer> getCoffeesByKeywords(String keyword1, String keyword2) {
-		// TODO Auto-generated method stub
-		return null;
+		LinkedList<Integer> results = new LinkedList<Integer>();
+		String queryString = "SELECT coffee_id FROM boutique_coffee.coffee";
+		String fieldName = "coffee_id";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(queryString);
+			ResultSet values = stmt.executeQuery();
+			
+			while(values.next()) {
+				int id = values.getInt(fieldName);
+				results.add(id);
+			}
+		} catch(SQLException e) {
+			logException(e);
+			results = new LinkedList<Integer>();
+		} catch(Exception e) {
+			results = new LinkedList<Integer>();
+		}
+		
+		return results;
 	}
 
 	@Override
 	public double getPointsByCustomerId(int customerId) {
-		// TODO Auto-generated method stub
-		return 0;
+		double pts;
+		String queryString = "SELECT total_points FROM boutique_coffee.customer WHERE customer_id = ?";
+		String fieldName = "total_points";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(queryString);
+			stmt.setInt(1, customerId);
+			ResultSet values = stmt.executeQuery();
+			
+			if(values.next()) {
+				pts = values.getDouble(fieldName);
+			}
+			else {
+				pts = -1;
+			}
+		} catch(SQLException e) {
+			logException(e);
+			pts = -1;
+		} catch(Exception e) {
+			pts = -1;
+		}
+		return pts;
 	}
 
 	@Override
@@ -128,4 +174,13 @@ class BoutiqueCoffee implements ITransactionManager
 		return null;
 	}
 	
+	private void logException(SQLException e) {
+		error_logger.accept("SQL ERROR");
+		while(e != null) {
+			error_logger.accept(e.getMessage());
+			error_logger.accept(e.getSQLState());
+			error_logger.accept("" + e.getErrorCode());
+			e = e.getNextException();
+		}
+	}
 }

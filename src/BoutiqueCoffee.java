@@ -43,7 +43,7 @@ class BoutiqueCoffee implements ITransactionManager
 
 	@Override
 	public int addStore(String name, String address, String storeType, double gpsLong, double gpsLat) {
-		// TODO Auto-generated method stub
+		// TODO Jay
 		return 0;
 	}
 
@@ -83,9 +83,28 @@ class BoutiqueCoffee implements ITransactionManager
 	}
 
 	@Override
-	public int offerCoffee(int storeId, int cofeeId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int offerCoffee(int storeId, int coffeeId) {
+		// TODO Jay
+		String insertOfferCoffee = "INSERT INTO boutique_coffee.offercoffee(store_Id, coffee_Id) VALUES(?, ?)";
+		PreparedStatement statement;
+		try {
+			statement = conn.prepareStatement(insertOfferCoffee);
+			statement.setInt(1, storeId);
+			statement.setInt(1, coffeeId);
+			int affectedRows = statement.executeUpdate();
+
+			if(affectedRows == 0) {
+				throw new SQLException("Add offerCoffee Failed, no rows affected");
+			} else {
+				return 1;
+			}
+
+		} catch (SQLException e) {
+			logException(e);
+			return -1;
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 
 	@Override
@@ -121,25 +140,63 @@ class BoutiqueCoffee implements ITransactionManager
 
 	@Override
 	public int promoteFor(int promotionId, int coffeeId) {
-		// TODO Auto-generated method stub
-		return 0;
+		// TODO Jay
+		String insertPromoteFor = "INSERT INTO boutique_coffee.promotefor(promotion_Id, coffee_Id) VALUES(?, ?)";
+		PreparedStatement statement;
+		try {
+			statement = conn.prepareStatement(insertPromoteFor);
+			statement.setInt(1, promotionId);
+			statement.setInt(1, coffeeId);
+			int affectedRows = statement.executeUpdate();
+
+			if(affectedRows == 0) {
+				throw new SQLException("Add Promotion For Failed, no rows affected");
+			} else {
+				return 1;
+			}
+
+		} catch (SQLException e) {
+			logException(e);
+			return -1;
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 
 	@Override
 	public int hasPromotion(int storeId, int promotionId) {
-		// TODO Auto-generated method stub
-		return 0;
+		// TODO Jay
+		String inserthasPromotion = "INSERT INTO boutique_coffee.haspromotion(store_id, promotion_id) VALUES (?, ?)";
+		PreparedStatement statement;
+		try {
+			statement = conn.prepareStatement(inserthasPromotion);
+			statement.setInt(1, storeId);
+			statement.setInt(1, promotionId);
+			int affectedRows = statement.executeUpdate();
+
+			if (affectedRows == 0) {
+				throw new SQLException("Add hasPromotion failed, no rows affected");
+			} else {
+				return  1;
+			}
+
+		} catch (SQLException e) {
+			logException(e);
+			return  -1;
+		} catch (Exception e) {
+			return  -1;
+		}
 	}
 
 	@Override
 	public int addMemberLevel(String name, double boosterFactor) {
-		// TODO Auto-generated method stub
+		// TODO Jay
 		return 0;
 	}
 
 	@Override
 	public int addCustomer(String firstName, String lastName, String email, int memberLevelId, double totalPoints) {
-		// TODO Auto-generated method stub
+		// TODO Jay
 		return 0;
 	}
 
@@ -333,7 +390,7 @@ class BoutiqueCoffee implements ITransactionManager
 		commit();
 		return results;
 	}
-	
+
 	private void logException(SQLException e) {
 		error_logger.accept("SQL ERROR");
 		while(e != null) {

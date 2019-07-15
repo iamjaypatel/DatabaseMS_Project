@@ -6,7 +6,7 @@ public class BCDriver {
 
 	private static BoutiqueCoffee db;
 	
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
 		try {
 			db = new BoutiqueCoffee("postgres", "postgres");
 		} catch (Exception e) {

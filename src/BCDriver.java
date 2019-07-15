@@ -12,6 +12,7 @@ public class BCDriver {
 		} catch (Exception e) {
 			System.out.println("Connection Failed");
 			System.out.println(e.getMessage());
+			System.exit(-1);
 		}
 		
 		db.setErrorLogger(s -> System.err.println(s));

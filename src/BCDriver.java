@@ -8,7 +8,7 @@ public class BCDriver {
 	
 	public static void main(String[] args) {
 		try {
-			db = new BoutiqueCoffee("postgres", "postgres");
+			db = new BoutiqueCoffee("postgres", "1");
 		} catch (Exception e) {
 			System.out.println("Connection Failed");
 			System.out.println(e.getMessage());

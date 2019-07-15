@@ -1,3 +1,4 @@
+import java.io.PipedReader;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -40,7 +41,6 @@ class BoutiqueCoffee implements ITransactionManager
 	}
 	
 	// TRANSACTIONS
-
 	@Override
 	public int addStore(String name, String address, String storeType, double gpsLong, double gpsLat) {
 		// TODO Jay
@@ -187,13 +187,38 @@ class BoutiqueCoffee implements ITransactionManager
 
 	@Override
 	public int addMemberLevel(String name, double boosterFactor) {
-		// TODO Jay
-		return 0;
+		int val = -1;
+		String insertaddMemberLevel = "INSERT INTO boutique_coffee.memberlevel(name, booster_factor) VALUES (?, ?)";
+		String newField = "memberlevel_id";
+		PreparedStatement statement;
+		try {
+			statement = conn.prepareStatement(insertaddMemberLevel, new String[] {newField});
+			statement.setString(1, name);
+			statement.setDouble(2, boosterFactor);
+
+			int affectedRows = statement.executeUpdate();
+			if(affectedRows == 0) {
+				throw new SQLException("Add Memberlevel Failed, no rows affected");
+			}
+
+			ResultSet values = statement.getGeneratedKeys();
+			if(values.next()) {
+				val = values.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			logException(e);
+			val = -1;
+		} catch (Exception e) {
+			val = -1;
+		}
+		return val;
 	}
 
 	@Override
 	public int addCustomer(String firstName, String lastName, String email, int memberLevelId, double totalPoints) {
 		// TODO Jay
+
 		return 0;
 	}
 

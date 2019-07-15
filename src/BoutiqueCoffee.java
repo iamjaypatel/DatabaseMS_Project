@@ -84,13 +84,12 @@ class BoutiqueCoffee implements ITransactionManager
 
 	@Override
 	public int offerCoffee(int storeId, int coffeeId) {
-		// TODO Jay
 		String insertOfferCoffee = "INSERT INTO boutique_coffee.offercoffee(store_Id, coffee_Id) VALUES(?, ?)";
 		PreparedStatement statement;
 		try {
 			statement = conn.prepareStatement(insertOfferCoffee);
 			statement.setInt(1, storeId);
-			statement.setInt(1, coffeeId);
+			statement.setInt(2, coffeeId);
 			int affectedRows = statement.executeUpdate();
 
 			if(affectedRows == 0) {
@@ -140,13 +139,12 @@ class BoutiqueCoffee implements ITransactionManager
 
 	@Override
 	public int promoteFor(int promotionId, int coffeeId) {
-		// TODO Jay
 		String insertPromoteFor = "INSERT INTO boutique_coffee.promotefor(promotion_Id, coffee_Id) VALUES(?, ?)";
 		PreparedStatement statement;
 		try {
 			statement = conn.prepareStatement(insertPromoteFor);
 			statement.setInt(1, promotionId);
-			statement.setInt(1, coffeeId);
+			statement.setInt(2, coffeeId);
 			int affectedRows = statement.executeUpdate();
 
 			if(affectedRows == 0) {
@@ -165,13 +163,12 @@ class BoutiqueCoffee implements ITransactionManager
 
 	@Override
 	public int hasPromotion(int storeId, int promotionId) {
-		// TODO Jay
 		String inserthasPromotion = "INSERT INTO boutique_coffee.haspromotion(store_id, promotion_id) VALUES (?, ?)";
 		PreparedStatement statement;
 		try {
 			statement = conn.prepareStatement(inserthasPromotion);
 			statement.setInt(1, storeId);
-			statement.setInt(1, promotionId);
+			statement.setInt(2, promotionId);
 			int affectedRows = statement.executeUpdate();
 
 			if (affectedRows == 0) {

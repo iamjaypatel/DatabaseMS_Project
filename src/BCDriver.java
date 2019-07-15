@@ -24,6 +24,13 @@ public class BCDriver {
 		test_addCoffee();
 		test_addPromotion();
 		test_addPurchase();
+		test_addMemberLevel();
+		test_addCustomer();
+		test_addStore();
+		
+		test_promoteFor();
+		test_hasPromotion();
+		test_offerCoffee();
 		
 		test_topStores();
 		test_topCustomers();
@@ -61,11 +68,47 @@ public class BCDriver {
 		System.out.println(id);
 	}
 	
+	private static void test_addCustomer() {
+		System.out.println("\n--- ADD CUSTOMER Joe Schmoe ---");
+		int id = db.addCustomer("Joe", "Schmoe", "joe.schmoe@gmail.com", 1, 0);
+		System.out.println(id);
+	}
+	
+	private static void test_addMemberLevel() {
+		System.out.println("\n--- ADD MEMBER LEVEL PLutonium Plus ---");
+		int id = db.addMemberLevel("Plutonium Plus", 9000);
+		System.out.println(id);
+	}
+	
+	private static void test_addStore() {
+		System.out.println("\n--- ADD STORE ---");
+		int id = db.addStore("Craig's Coffee", "100 Washington Ave.", "Standalone", -80.236287, 40.187162);
+		System.out.println(id);
+	}
+	
+	private static void test_hasPromotion() {
+		System.out.println("\n--- HAS PROMOTION ---");
+		int id = db.hasPromotion(3, 1);
+		System.out.println(id);
+	}
+	
+	private static void test_promoteFor() {
+		System.out.println("\n--- PROMOTE FOR ---");
+		int id = db.promoteFor(1, 6);
+		System.out.println(id);
+	}
+	
 	private static void test_addPromotion() {
 		System.out.println("\n--- ADD PROMOTION 'Double Points'");
 		Date start = Date.valueOf("2019-07-01");
 		Date end = Date.valueOf("2019-07-28");
 		int id = db.addPromotion("Darker is Better", start, end);
+		System.out.println(id);
+	}
+	
+	private static void test_offerCoffee() {
+		System.out.println("\n--- OFFER COFFEE ---");
+		int id = db.offerCoffee(3, 1);
 		System.out.println(id);
 	}
 	

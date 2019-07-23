@@ -1,3 +1,12 @@
+/**
+ * BDBenchmark.java
+ * Phase 3 of Database Management Systems[CS 1555]
+ * Please run on empty database, with the schema and any trigger(s) set up.
+ * Make sure to change the username and password in Line No 16 to connect to database.
+ *
+ * @author Jay Patel and Kevin Zinn
+ */
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +16,7 @@ public class BCBenchmark {
 
     public static void main(String[] args) {
         long startTime, endTime, calcTime;
-        try { // Please change the Username and Password to access your Database.
+        try { 
             db = new BoutiqueCoffee("postgres", "1");
         } catch (Exception e) {
             System.out.println("Connection Failed");

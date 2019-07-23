@@ -17,7 +17,7 @@ public class BCBenchmark {
     public static void main(String[] args) {
         long startTime, endTime, calcTime;
         try { 
-            db = new BoutiqueCoffee("postgres", "1");
+            db = new BoutiqueCoffee("postgres", "postgres");
         } catch (Exception e) {
             System.out.println("Connection Failed");
             System.out.println(e.getMessage());
@@ -95,7 +95,7 @@ public class BCBenchmark {
         System.out.println("Execution time for hasPromotion(): " + calcTime + " ms.");
 
         startTime = System.currentTimeMillis();
-        //stressTest_addPurchase();
+        stressTest_addPurchase();
         endTime = System.currentTimeMillis();
         calcTime = endTime - startTime;
         System.out.println("Execution time for addPurchase(): " + calcTime + " ms.");
@@ -208,14 +208,15 @@ public class BCBenchmark {
         //TODO: DEBUG
 
         Date d = Date.valueOf("2019-07-20");
-        List<Integer> coffees = new ArrayList<Integer>(1000);
-        List<Integer> purchased = new ArrayList<Integer>(1000);
-        List<Integer> redeemed = new ArrayList<Integer>(1000);
 
         for (int j = 1; j < 1001; j++){
+            List<Integer> coffees = new ArrayList<Integer>(1);
+            List<Integer> purchased = new ArrayList<Integer>(1);
+            List<Integer> redeemed = new ArrayList<Integer>(1);
+            
             purchased.add(j);
             coffees.add(j);
-            redeemed.add(1);
+            redeemed.add(j / 100);
             db.addPurchase(j, j, d, coffees, purchased, redeemed);
         }
 

@@ -117,16 +117,19 @@ public class BCBenchmark {
 
     private static void stressTest_getCoffees() {
         System.out.println("\n--- GET COFFEES 1000 INSERTS ---");
+        //TODO
 
     }
 
     private static void stressTest_getCoffeesByKeyword() {
         System.out.println("\n--- GET COFFEES BY KEYWORD ---");
+        //TODO
 
     }
 
     private static void stressTest_getPointsByCustomerId() {
         System.out.println("\n--- GET POINTS BY CUSTOMER ID ---");
+        //TODO
 
     }
 
@@ -202,6 +205,7 @@ public class BCBenchmark {
 
     private static void stressTest_addPurchase() {
         System.out.println("\n--- ADD PURCHASE 1000 INSERTS ---");
+        //TODO: DEBUG
 
         Date d = Date.valueOf("2019-07-20");
         List<Integer> coffees = new ArrayList<Integer>(1000);
@@ -219,11 +223,13 @@ public class BCBenchmark {
 
     private static void stressTest_topStores() {
         System.out.println("\n--- TOP SCORES ---");
+        //TODO
 
     }
 
     private static void stressTest_topCustomers() {
         System.out.println("\n--- TOP CUSTOMERS ---");
+        //TODO
 
     }
 }

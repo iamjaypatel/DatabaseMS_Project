@@ -83,12 +83,6 @@ public class BCBenchmark {
         System.out.println("Execution time for addPromotion(): " + calcTime + " ms.");
 
         startTime = System.currentTimeMillis();
-        stressTest_addPurchase();
-        endTime = System.currentTimeMillis();
-        calcTime = endTime - startTime;
-        System.out.println("Execution time for addPurchase(): " + calcTime + " ms.");
-
-        startTime = System.currentTimeMillis();
         stressTest_promoteFor();
         endTime = System.currentTimeMillis();
         calcTime = endTime - startTime;
@@ -100,6 +94,11 @@ public class BCBenchmark {
         calcTime = endTime - startTime;
         System.out.println("Execution time for hasPromotion(): " + calcTime + " ms.");
 
+        startTime = System.currentTimeMillis();
+        //stressTest_addPurchase();
+        endTime = System.currentTimeMillis();
+        calcTime = endTime - startTime;
+        System.out.println("Execution time for addPurchase(): " + calcTime + " ms.");
 
         startTime = System.currentTimeMillis();
         stressTest_topStores();
@@ -144,7 +143,9 @@ public class BCBenchmark {
         double[] pts = new double[1001];
         for (int i = 1; i < 1001; i++) {
             ml[i] = i;
-            pts[i] = i;
+        }
+        for (int j = 1; j < 1001; j++) {
+            pts[j] = j+99;
         }
         for (int k = 1; k < 1001; k++) {
             db.addCustomer("FN " + k, "LN " + k, "FN.LN" + k + "@gmail.com", ml[k], pts[k]);
@@ -168,16 +169,26 @@ public class BCBenchmark {
 
     private static void stressTest_hasPromotion() {
         System.out.println("\n--- HAS PROMOTION 1000 INSERTS ---");
+        for (int i = 1; i < 1001; i++){
+            db.hasPromotion(i, i);
+        }
 
     }
 
     private static void stressTest_promoteFor() {
         System.out.println("\n--- PROMOTE FOR 1000 INSERTS ---");
-
+        for (int i = 1; i < 1001; i++){
+            db.promoteFor(i, i);
+        }
     }
 
     private static void stressTest_addPromotion() {
         System.out.println("\n--- ADD PROMOTION 1000 INSERTS ---");
+        Date start = Date.valueOf("2019-07-01");
+        Date end = Date.valueOf("2019-07-28");
+        for (int i = 1; i < 1001; i++){
+            db.addPromotion("Promotion "+ i, start, end);
+        }
 
     }
 
@@ -191,27 +202,19 @@ public class BCBenchmark {
 
     private static void stressTest_addPurchase() {
         System.out.println("\n--- ADD PURCHASE 1000 INSERTS ---");
-        /*
+
         Date d = Date.valueOf("2019-07-20");
         List<Integer> coffees = new ArrayList<Integer>(1000);
         List<Integer> purchased = new ArrayList<Integer>(1000);
         List<Integer> redeemed = new ArrayList<Integer>(1000);
 
-        for (int i = 1; i < 1000; i++){
-            for(int c = 1; c < 7; c++){
-                coffees.add(c);
-            }
-        }
-        for (int j = 1; j < 1000; j++){
+        for (int j = 1; j < 1001; j++){
             purchased.add(j);
+            coffees.add(j);
+            redeemed.add(1);
+            db.addPurchase(j, j, d, coffees, purchased, redeemed);
         }
-        for(int k = 1; k < 2; k++){
-            redeemed.add(k);
-        }
-        for(int n = 1; n < 1000; n++){
-            db.addPurchase(n, n, d, coffees, purchased, redeemed);
-        }
-        */
+
     }
 
     private static void stressTest_topStores() {

@@ -92,7 +92,6 @@ public class BCBenchmark {
         System.out.println("Execution time for hasPromotion(): " + calcTime + " ms.");
 
 
-
         startTime = System.currentTimeMillis();
         stressTest_topStores();
         endTime = System.currentTimeMillis();
@@ -125,20 +124,20 @@ public class BCBenchmark {
 
     private static void stressTest_addCoffee() {
         System.out.println("\n--- ADD COFFEE 1000 Inserts ---");
-        for (int i = 0; i < 1000; i++){
+        for (int i = 0; i < 1000; i++) {
             db.addCoffee("Coffee Name", "Description", 11, 7.79, 80, 100);
         }
     }
 
     private static void stressTest_addCustomer() {
         System.out.println("\n--- ADD CUSTOMER 1000 Inserts ---");
-        int [] ml = new int[1001];
-        double [] pts = new double[1001];
-        for (int i = 1; i < 1001; i++){
+        int[] ml = new int[1001];
+        double[] pts = new double[1001];
+        for (int i = 1; i < 1001; i++) {
             ml[i] = i;
             pts[i] = i;
         }
-        for(int k = 1; k < 1001; k++){
+        for (int k = 1; k < 1001; k++) {
             db.addCustomer("FN " + k, "LN " + k, "FN.LN" + k + "@gmail.com", ml[k], pts[k]);
         }
 
@@ -146,14 +145,14 @@ public class BCBenchmark {
 
     private static void stressTest_addMemberLevel() {
         System.out.println("\n--- ADD MEMBER LEVEL 1000 Inserts ---");
-        for (int i = 1; i < 1001; i++){
-            db.addMemberLevel("MemberLevel "+ i, i * 2);
+        for (int i = 1; i < 1001; i++) {
+            db.addMemberLevel("MemberLevel " + i, i * 2);
         }
     }
 
     private static void stressTest_addStore() {
         System.out.println("\n--- ADD STORE 1000 Inserts ---");
-        for (int i = 0; i < 1000; i++){
+        for (int i = 0; i < 1000; i++) {
             db.addStore("Store " + i, "Address Store " + i, "Store Type", i * 4.12, i * 2.25);
         }
     }
@@ -175,7 +174,7 @@ public class BCBenchmark {
 
     private static void stressTest_offerCoffee() {
         System.out.println("\n--- OFFER COFFEE 1000 INSERTS ---");
-        for (int i = 1; i < 1001; i++){
+        for (int i = 1; i < 1001; i++) {
             db.offerCoffee(i, i);
         }
 

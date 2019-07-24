@@ -24,6 +24,7 @@ public class BCApp {
     private static BoutiqueCoffee boutiqueCoffee;
 
     private JPanel secondPanel; // goes here after finding member
+
     public BCApp() {
         txtEmail.setEditable(false);
         txtLastName.setEditable(false);
@@ -48,8 +49,8 @@ public class BCApp {
             public void actionPerformed(ActionEvent e) {
                 txtFirstName.getAccessibleContext();
                 int val;
-                val = boutiqueCoffee.addCustomer(txtFirstName.getText(), txtLastName.getText(), txtEmail.getText(),1,0);
-                JOptionPane.showMessageDialog(null,"Member Created, \n Member ID: " + val);
+                val = boutiqueCoffee.addCustomer(txtFirstName.getText(), txtLastName.getText(), txtEmail.getText(), 1, 0);
+                JOptionPane.showMessageDialog(null, "Member Created, \n Member ID: " + val);
             }
         });
         btnFindMemID.addActionListener(new ActionListener() {
@@ -65,7 +66,7 @@ public class BCApp {
                 ret = boutiqueCoffee.getMemberID(Integer.parseInt(txtMemberID.getText()));
                 lblretValMemID.setText(Double.toString(ret));
 
-                if (ret != -1.0){
+                if (ret != -1.0) {
                     lblRetMemID.setVisible(true);
                     lblretValMemID.setVisible(true);
                     BCAppDialog dialog = new BCAppDialog();

@@ -17,7 +17,7 @@ public class BCBenchmark {
     public static void main(String[] args) {
         long startTime, endTime, calcTime;
         try { 
-            db = new BoutiqueCoffee("postgres", "postgres");
+            db = new BoutiqueCoffee("postgres", "1");
         } catch (Exception e) {
             System.out.println("Connection Failed");
             System.out.println(e.getMessage());
@@ -130,7 +130,9 @@ public class BCBenchmark {
     private static void stressTest_getPointsByCustomerId() {
         System.out.println("\n--- GET POINTS BY CUSTOMER ID ---");
         //TODO
-
+        for (int i = 1; i < 1001; i++){
+            db.getPointsByCustomerId(i);
+        }
     }
 
     private static void stressTest_addCoffee() {
@@ -205,7 +207,6 @@ public class BCBenchmark {
 
     private static void stressTest_addPurchase() {
         System.out.println("\n--- ADD PURCHASE 1000 INSERTS ---");
-        //TODO: DEBUG
 
         Date d = Date.valueOf("2019-07-20");
 

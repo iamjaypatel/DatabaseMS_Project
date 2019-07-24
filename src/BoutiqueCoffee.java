@@ -477,6 +477,29 @@ class BoutiqueCoffee implements ITransactionManager {
         return results;
     }
 
+    // Returns Member ID if found. else returns -1.
+    public double getMemberID(int memberID){
+        double val;
+        String QSgetMemberID = "SELECT customer_id FROM boutique_coffee.customer WHERE customer_id = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(QSgetMemberID);
+            statement.setInt(1, memberID);
+            ResultSet values = statement.executeQuery();
+
+            if (values.next()) {
+                val = values.getDouble(1);
+            } else {
+                 val = -1;
+            }
+        } catch (SQLException e) {
+            logException(e);
+            val = -1;
+        } catch (Exception e) {
+            val = -1;
+        }
+        return val;
+    }
+
     private void logException(SQLException e) {
         error_logger.accept("SQL ERROR");
         while (e != null) {

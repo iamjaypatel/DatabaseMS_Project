@@ -16,7 +16,7 @@ public class BCBenchmark {
 
     public static void main(String[] args) {
         long startTime, endTime, calcTime;
-        try { 
+        try {
             db = new BoutiqueCoffee("postgres", "1");
         } catch (Exception e) {
             System.out.println("Connection Failed");
@@ -130,7 +130,7 @@ public class BCBenchmark {
     private static void stressTest_getPointsByCustomerId() {
         System.out.println("\n--- GET POINTS BY CUSTOMER ID ---");
         //TODO
-        for (int i = 1; i < 1001; i++){
+        for (int i = 1; i < 1001; i++) {
             db.getPointsByCustomerId(i);
         }
     }
@@ -150,7 +150,7 @@ public class BCBenchmark {
             ml[i] = i;
         }
         for (int j = 1; j < 1001; j++) {
-            pts[j] = j+99;
+            pts[j] = j + 99;
         }
         for (int k = 1; k < 1001; k++) {
             db.addCustomer("FN " + k, "LN " + k, "FN.LN" + k + "@gmail.com", ml[k], pts[k]);
@@ -174,7 +174,7 @@ public class BCBenchmark {
 
     private static void stressTest_hasPromotion() {
         System.out.println("\n--- HAS PROMOTION 1000 INSERTS ---");
-        for (int i = 1; i < 1001; i++){
+        for (int i = 1; i < 1001; i++) {
             db.hasPromotion(i, i);
         }
 
@@ -182,7 +182,7 @@ public class BCBenchmark {
 
     private static void stressTest_promoteFor() {
         System.out.println("\n--- PROMOTE FOR 1000 INSERTS ---");
-        for (int i = 1; i < 1001; i++){
+        for (int i = 1; i < 1001; i++) {
             db.promoteFor(i, i);
         }
     }
@@ -191,8 +191,8 @@ public class BCBenchmark {
         System.out.println("\n--- ADD PROMOTION 1000 INSERTS ---");
         Date start = Date.valueOf("2019-07-01");
         Date end = Date.valueOf("2019-07-28");
-        for (int i = 1; i < 1001; i++){
-            db.addPromotion("Promotion "+ i, start, end);
+        for (int i = 1; i < 1001; i++) {
+            db.addPromotion("Promotion " + i, start, end);
         }
 
     }
@@ -210,11 +210,11 @@ public class BCBenchmark {
 
         Date d = Date.valueOf("2019-07-20");
 
-        for (int j = 1; j < 1001; j++){
+        for (int j = 1; j < 1001; j++) {
             List<Integer> coffees = new ArrayList<Integer>(1);
             List<Integer> purchased = new ArrayList<Integer>(1);
             List<Integer> redeemed = new ArrayList<Integer>(1);
-            
+
             purchased.add(j);
             coffees.add(j);
             redeemed.add(j / 100);

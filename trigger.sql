@@ -73,7 +73,7 @@ BEGIN
     SET total_points = total_points + delta
     FROM (SELECT NEW.*) i
              NATURAL INNER JOIN boutique_coffee.purchase as p
-             WHERE c.customer_id = p.customer_id;
+    WHERE c.customer_id = p.customer_id;
 
     RETURN NEW;
 END;

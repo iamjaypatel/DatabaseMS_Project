@@ -17,9 +17,12 @@ public class BCApp {
     private JButton btnFindMemID;
     private JLabel lblMemberID;
     private JLabel lblRetMemID;
-    private JLabel lblretValMemID;
+    public JLabel lblretValMemID;
     private JRadioButton radExisting;
     private JRadioButton radNewMember;
+    private JComboBox cbMemberLvl;
+    private JLabel lblMemberLvl;
+    private JButton btnExit;
 
     private static BoutiqueCoffee boutiqueCoffee;
 
@@ -33,6 +36,7 @@ public class BCApp {
         txtMemberID.setEditable(false);
         btnFindMemID.setEnabled(false);
         lblRetMemID.setVisible(false);
+        cbMemberLvl.setEnabled(false);
 
         boutiqueCoffee.addMemberLevel("Regular", 0.35);
         boutiqueCoffee.addMemberLevel("Gold", 0.7);
@@ -49,8 +53,31 @@ public class BCApp {
             public void actionPerformed(ActionEvent e) {
                 txtFirstName.getAccessibleContext();
                 int val;
-                val = boutiqueCoffee.addCustomer(txtFirstName.getText(), txtLastName.getText(), txtEmail.getText(), 1, 0);
-                JOptionPane.showMessageDialog(null, "Member Created, \n Member ID: " + val);
+                int points = 0;
+                int memberlvl = 1;
+                if (cbMemberLvl.getSelectedIndex() == 1) {
+                    points = 100;
+                    memberlvl = 1;
+                    val = boutiqueCoffee.addCustomer(txtFirstName.getText(), txtLastName.getText(), txtEmail.getText(), memberlvl, points);
+                    JOptionPane.showMessageDialog(null, "Member Created, \n Member ID: " + val);
+                } else if (cbMemberLvl.getSelectedIndex() == 2) {
+                    points = 250;
+                    memberlvl = 2;
+                    val = boutiqueCoffee.addCustomer(txtFirstName.getText(), txtLastName.getText(), txtEmail.getText(), memberlvl, points);
+                    JOptionPane.showMessageDialog(null, "Member Created, \n Member ID: " + val);
+                } else if (cbMemberLvl.getSelectedIndex() == 3) {
+                    points = 450;
+                    memberlvl = 3;
+                    val = boutiqueCoffee.addCustomer(txtFirstName.getText(), txtLastName.getText(), txtEmail.getText(), memberlvl, points);
+                    JOptionPane.showMessageDialog(null, "Member Created, \n Member ID: " + val);
+                } else if (cbMemberLvl.getSelectedIndex() == 4) {
+                    points = 750;
+                    memberlvl = 4;
+                    val = boutiqueCoffee.addCustomer(txtFirstName.getText(), txtLastName.getText(), txtEmail.getText(), memberlvl, points);
+                    JOptionPane.showMessageDialog(null, "Member Created, \n Member ID: " + val);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please Select Member ID");
+                }
             }
         });
         btnFindMemID.addActionListener(new ActionListener() {
@@ -126,12 +153,23 @@ public class BCApp {
                 txtFirstName.setEditable(true);
                 btnAddMember.setEnabled(true);
                 lblRetMemID.setVisible(true);
-
+                cbMemberLvl.setEnabled(true);
 
                 txtMemberID.setEditable(false);
                 btnFindMemID.setEnabled(false);
                 lblretValMemID.setVisible(false);
                 lblRetMemID.setVisible(false);
+            }
+        });
+        btnExit.addActionListener(new ActionListener() {
+            /**
+             * Exit Button
+             *
+             * @param e
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
     }

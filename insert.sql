@@ -247,7 +247,7 @@ INSERT INTO boutique_coffee.coffee(coffee_id, name, description, intensity, pric
 VALUES (DEFAULT, 'OG. Blend Vanilla', 'Vanilla flavor', 5, 2.99, 20, 35);
 
 INSERT INTO boutique_coffee.coffee(coffee_id, name, description, intensity, price, reward_points, redeem_points)
-VALUES (DEFAULT, 'Dark Roast Mocha', 'Dark Roase w/ Mocha', 7, 4.99, 50, 65);
+VALUES (DEFAULT, 'Dark Roast Mocha', 'Dark Roast w/ Mocha', 7, 4.99, 50, 65);
 
 INSERT INTO boutique_coffee.coffee(coffee_id, name, description, intensity, price, reward_points, redeem_points)
 VALUES (DEFAULT, 'Regular Coffee', 'Coffee Blend', 6, 5.49, 55, 70);

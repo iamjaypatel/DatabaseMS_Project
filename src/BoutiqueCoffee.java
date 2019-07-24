@@ -478,7 +478,7 @@ class BoutiqueCoffee implements ITransactionManager {
     }
 
     // Returns Member ID if found. else returns -1.
-    public double getMemberID(int memberID){
+    public double getMemberID(int memberID) {
         double val;
         String QSgetMemberID = "SELECT customer_id FROM boutique_coffee.customer WHERE customer_id = ?";
         try {
@@ -489,7 +489,7 @@ class BoutiqueCoffee implements ITransactionManager {
             if (values.next()) {
                 val = values.getDouble(1);
             } else {
-                 val = -1;
+                val = -1;
             }
         } catch (SQLException e) {
             logException(e);

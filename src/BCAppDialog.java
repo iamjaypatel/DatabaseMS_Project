@@ -26,6 +26,9 @@ public class BCAppDialog extends JDialog {
     private JLabel lblRedeem;
     private JSpinner spnRedeem;
     private JButton btnCalcTot;
+    private JButton btnBackQuant;
+    private JComboBox cbSelectCoffee;
+    private JLabel lblGetIntensity;
     private static BoutiqueCoffee boutiqueCoffee;
 
     public BCAppDialog() {
@@ -66,21 +69,7 @@ public class BCAppDialog extends JDialog {
              */
             @Override
             public void actionPerformed(ActionEvent e) {
-                tabbedPane1.setSelectedIndex(1);
-                tabbedPane1.setEnabledAt(2, false);
-                btnPurchase.setEnabled(false);
-                DefaultListModel model = new DefaultListModel<>();
-                model.addElement("Caffee Misto");
-                model.addElement("Iced Coffee");
-                lstCoffee.setModel(model);
-
-                if (lstCoffee.getSelectedIndex() == 0) {
-                    lblGetDesc.setText("Brewed Coffee w/Milk, Intensity: 5");
-                    lblGetPrice.setText("3.95");
-                } else if (lstCoffee.getSelectedIndex() == 1) {
-                    lblGetDesc.setText("Ice Brewed Coffee, Intensity: 3");
-                    lblGetPrice.setText("4.95");
-                }
+                radStarbucks();
             }
         });
 
@@ -92,22 +81,7 @@ public class BCAppDialog extends JDialog {
              */
             @Override
             public void actionPerformed(ActionEvent e) {
-                tabbedPane1.setSelectedIndex(1);
-                tabbedPane1.setEnabledAt(2, false);
-                btnPurchase.setEnabled(false);
-                DefaultListModel model = new DefaultListModel<>();
-                model.addElement("Original Blend Vanilla");
-                model.addElement("Dark Roast Mocha");
-                lstCoffee.setModel(model);
-
-                if (lstCoffee.getSelectedIndex() == 0) {
-                    lblGetDesc.setText("Vanilla Flavor, Intensity: 5");
-                    lblGetPrice.setText("2.99");
-                } else if (lstCoffee.getSelectedIndex() == 1) {
-                    lblGetDesc.setText("Dark Roast w/ Mocha, Intensity: 7");
-                    lblGetPrice.setText("4.99");
-                }
-
+                radDunkin();
             }
         });
 
@@ -119,21 +93,7 @@ public class BCAppDialog extends JDialog {
              */
             @Override
             public void actionPerformed(ActionEvent e) {
-                tabbedPane1.setSelectedIndex(1);
-                tabbedPane1.setEnabledAt(2, false);
-                btnPurchase.setEnabled(false);
-                DefaultListModel model = new DefaultListModel<>();
-                model.addElement("Regular Coffee");
-                model.addElement("Ice Coffee");
-                lstCoffee.setModel(model);
-
-                if (lstCoffee.getSelectedIndex() == 0) {
-                    lblGetDesc.setText("Coffee Blend, Intensity: 6");
-                    lblGetPrice.setText("5.49");
-                } else if (lstCoffee.getSelectedIndex() == 1) {
-                    lblGetDesc.setText("Iced Coffee, Intensity: 2");
-                    lblGetPrice.setText("3.49");
-                }
+                radCrazyMocha();
             }
         });
 
@@ -147,9 +107,11 @@ public class BCAppDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 tabbedPane1.setSelectedIndex(0);
+                tabbedPane1.setEnabledAt(1, false);
                 tabbedPane1.setEnabledAt(2, false);
-                btnPurchase.setEnabled(false);
 
+                btnPurchase.setEnabled(false);
+                cbSelectCoffee.removeAllItems();
             }
         });
         btnNext.addActionListener(new ActionListener() {
@@ -186,6 +148,30 @@ public class BCAppDialog extends JDialog {
                 lblPriceQ.setText("$ " + total);
             }
         });
+        btnBackQuant.addActionListener(new ActionListener() {
+            /**
+             * Invoked when an action occurs.
+             *
+             * @param e
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tabbedPane1.setSelectedIndex(1);
+                tabbedPane1.setEnabledAt(2, false);
+                btnPurchase.setEnabled(false);
+            }
+        });
+        cbSelectCoffee.addActionListener(new ActionListener() {
+            /**
+             * Invoked when an action occurs.
+             *
+             * @param e
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cbAction();
+            }
+        });
     }
 
     private void createUIComponents() {
@@ -201,5 +187,90 @@ public class BCAppDialog extends JDialog {
         lstCoffee = new JList();
         spnQuantity = new JSpinner();
         spnRedeem = new JSpinner();
+    }
+
+    private void radCrazyMocha() {
+        tabbedPane1.setSelectedIndex(1);
+        tabbedPane1.setEnabledAt(2, false);
+        tabbedPane1.setEnabledAt(0, false);
+
+        btnPurchase.setEnabled(false);
+        cbSelectCoffee.addItem("Regular Coffee");
+        cbSelectCoffee.addItem("Ice Coffee");
+    }
+
+    private void radDunkin() {
+        tabbedPane1.setSelectedIndex(1);
+        tabbedPane1.setEnabledAt(2, false);
+        tabbedPane1.setEnabledAt(0, false);
+
+        btnPurchase.setEnabled(false);
+        cbSelectCoffee.addItem("Original Blend Vanilla");
+        cbSelectCoffee.addItem("Dark Roast Mocha");
+    }
+
+    private void radStarbucks() {
+        tabbedPane1.setSelectedIndex(1);
+        tabbedPane1.setEnabledAt(2, false);
+        tabbedPane1.setEnabledAt(0, false);
+
+        btnPurchase.setEnabled(false);
+        cbSelectCoffee.addItem("Caffee Misto");
+        cbSelectCoffee.addItem("Iced Coffee ");
+    }
+
+    private void cbAction() {
+        if (radStarbucks.isSelected()) {
+            if (cbSelectCoffee.getSelectedIndex() == 0) {
+                lblGetDesc.setText("Brewed Coffee w/Milk");
+                lblGetIntensity.setText("Intensity: 5");
+                lblPrice.setText("Price ($)");
+                lblGetPrice.setText("3.95");
+            } else if (cbSelectCoffee.getSelectedIndex() == 1) {
+                lblGetDesc.setText("Ice Brewed Coffee");
+                lblGetIntensity.setText("Intensity: 3");
+                lblPrice.setText("Price ($)");
+                lblGetPrice.setText("4.95");
+            } else {
+                lblGetDesc.setText("");
+                lblGetIntensity.setText("");
+                lblPrice.setText("");
+                lblGetPrice.setText("");
+            }
+        } else if (radDunkin.isSelected()) {
+            if (cbSelectCoffee.getSelectedIndex() == 0) {
+                lblGetDesc.setText("Vanilla Flavor");
+                lblGetIntensity.setText("Intensity: 5");
+                lblPrice.setText("Price ($)");
+                lblGetPrice.setText("2.99");
+            } else if (cbSelectCoffee.getSelectedIndex() == 1) {
+                lblGetDesc.setText("Dark Roast w/ Mocha");
+                lblGetIntensity.setText("Intensity: 7");
+                lblPrice.setText("Price ($)");
+                lblGetPrice.setText("4.99");
+            } else {
+                lblGetDesc.setText("");
+                lblGetIntensity.setText("");
+                lblPrice.setText("");
+                lblGetPrice.setText("");
+            }
+        } else if (radCrazyMocha.isSelected()) {
+            if (cbSelectCoffee.getSelectedIndex() == 0) {
+                lblGetDesc.setText("Coffee Blend");
+                lblGetIntensity.setText("Intensity: 6");
+                lblPrice.setText("Price ($)");
+                lblGetPrice.setText("5.49");
+            } else if (cbSelectCoffee.getSelectedIndex() == 1) {
+                lblGetDesc.setText("Iced Coffee");
+                lblGetIntensity.setText("Intensity: 2");
+                lblPrice.setText("Price ($)");
+                lblGetPrice.setText("3.49");
+            } else {
+                lblGetDesc.setText("");
+                lblGetIntensity.setText("");
+                lblPrice.setText("");
+                lblGetPrice.setText("");
+            }
+        }
     }
 }

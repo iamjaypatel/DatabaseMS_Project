@@ -47,7 +47,9 @@ public class BCApp {
             @Override
             public void actionPerformed(ActionEvent e) {
                 txtFirstName.getAccessibleContext();
-                boutiqueCoffee.addCustomer(txtFirstName.getText(), txtLastName.getText(), txtEmail.getText(),1,0);
+                int val;
+                val = boutiqueCoffee.addCustomer(txtFirstName.getText(), txtLastName.getText(), txtEmail.getText(),1,0);
+                JOptionPane.showMessageDialog(null,"Member Created, \n Member ID: " + val);
             }
         });
         btnFindMemID.addActionListener(new ActionListener() {
@@ -64,10 +66,13 @@ public class BCApp {
                 lblretValMemID.setText(Double.toString(ret));
 
                 if (ret != -1.0){
+                    lblRetMemID.setVisible(true);
+                    lblretValMemID.setVisible(true);
                     BCAppDialog dialog = new BCAppDialog();
                     dialog.pack();
                     dialog.setVisible(true);
                 } else {
+                    lblRetMemID.setVisible(false);
                     lblretValMemID.setText("Member NOT FOUND");
                 }
             }
@@ -99,10 +104,11 @@ public class BCApp {
                 txtLastName.setEditable(false);
                 txtFirstName.setEditable(false);
                 btnAddMember.setEnabled(false);
+                lblRetMemID.setVisible(false);
+                lblretValMemID.setVisible(false);
 
                 txtMemberID.setEditable(true);
                 btnFindMemID.setEnabled(true);
-                lblRetMemID.setVisible(true);
 
             }
         });
@@ -123,17 +129,18 @@ public class BCApp {
 
                 txtMemberID.setEditable(false);
                 btnFindMemID.setEnabled(false);
+                lblretValMemID.setVisible(false);
+                lblRetMemID.setVisible(false);
             }
         });
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         mainPanel = new JPanel();
         btnAddMember = new JButton();
-        txtFirstName = new JTextField(20);
-        txtLastName = new JTextField(20);
-        txtEmail = new JTextField(20);
+        txtFirstName = new JTextField();
+        txtLastName = new JTextField();
+        txtEmail = new JTextField();
         txtMemberID = new JTextField();
 
     }

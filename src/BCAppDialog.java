@@ -3,15 +3,19 @@ import java.awt.event.*;
 
 public class BCAppDialog extends JDialog {
     private JPanel contentPane;
-    private JButton buttonOK;
+    private JButton btnPurchase;
     private JButton buttonCancel;
+    private JTabbedPane tabbedPane1;
+    private JRadioButton radStarbucks;
+    private JRadioButton radDunkin;
+    private JRadioButton radCrazyMocha;
 
     public BCAppDialog() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(btnPurchase);
 
-        buttonOK.addActionListener(new ActionListener() {
+        btnPurchase.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }

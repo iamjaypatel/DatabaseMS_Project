@@ -2,10 +2,17 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="BCApp">
   <grid id="27dc6" binding="mainPanel" custom-create="true" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="20" y="20" width="498" height="339"/>
+      <xy x="20" y="20" width="498" height="347"/>
     </constraints>
-    <properties/>
-    <border type="none"/>
+    <properties>
+      <background color="-1381654"/>
+    </properties>
+    <clientProperties>
+      <html.disable class="java.lang.Boolean" value="false"/>
+    </clientProperties>
+    <border type="line" title="Welcome to Boutique Coffee!&#10;" title-justification="2">
+      <color color="-65536"/>
+    </border>
     <children>
       <component id="61a17" class="javax.swing.JTextField" binding="txtEmail">
         <constraints>
@@ -113,7 +120,7 @@
       <component id="f453d" class="javax.swing.JRadioButton" binding="radExisting">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <gridbag top="25" left="0" bottom="25" right="0" weightx="0.0" weighty="0.0"/>
+          <gridbag top="15" left="0" bottom="15" right="0" weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
           <text value="Existing Member"/>
@@ -122,7 +129,7 @@
       <component id="457bf" class="javax.swing.JRadioButton" binding="radNewMember">
         <constraints>
           <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <gridbag top="25" left="50" bottom="25" right="0" weightx="0.0" weighty="0.0"/>
+          <gridbag top="15" left="50" bottom="15" right="0" weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
           <text value="New Member"/>

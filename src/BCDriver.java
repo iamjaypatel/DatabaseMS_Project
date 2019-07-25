@@ -8,8 +8,16 @@ public class BCDriver {
     private static BoutiqueCoffee db;
 
     public static void main(String[] args) {
+    	String password = "";
+    	if (args.length > 0) {
+    		password = args[0];
+    	}
+    	else
+    	{
+    		System.out.println("No Password Specified");
+    	}
         try {
-            db = new BoutiqueCoffee("postgres", "1");
+            db = new BoutiqueCoffee("postgres", password);
         } catch (Exception e) {
             System.out.println("Connection Failed");
             System.out.println(e.getMessage());
@@ -18,6 +26,11 @@ public class BCDriver {
 
         db.setErrorLogger(s -> System.err.println(s));
 
+        db.runSqlScript("schema.sql");
+        db.runSqlScript("trigger.sql");
+        db.runSqlScript("insert.sql");
+        db.runSqlScript("jdbc_procedures.sql");
+        
         test_getCoffees();
         test_getCoffeesByKeyword();
         test_getPointsByCustomerId();

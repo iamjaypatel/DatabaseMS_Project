@@ -29,7 +29,6 @@ class BoutiqueCoffee implements ITransactionManager {
         // no error logging by default
         setErrorLogger(s -> {
         });
-        addProcedures();
     }
 
     public BoutiqueCoffee(String username, String password) throws SQLException, ClassNotFoundException {
@@ -510,9 +509,9 @@ class BoutiqueCoffee implements ITransactionManager {
         }
     }
 
-    private void addProcedures() {
+    public void runSqlScript(String filename) {
         try {
-            List<String> lines = Files.readAllLines(Paths.get("jdbc_procedures.sql"));
+            List<String> lines = Files.readAllLines(Paths.get(filename));
             String queryString = String.join("\n", lines.toArray(new String[0]));
             conn.prepareCall(queryString).execute();
         } catch (SQLException e) {

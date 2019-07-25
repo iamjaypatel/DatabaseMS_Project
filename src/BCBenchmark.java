@@ -10,14 +10,22 @@
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class BCBenchmark {
     private static BoutiqueCoffee db;
 
     public static void main(String[] args) {
-        long startTime, endTime, calcTime;
+        String password = "";
+    	if (args.length > 0) {
+    		password = args[0];
+    	}
+    	else
+    	{
+    		System.out.println("No Password Specified");
+    	}        
         try {
-            db = new BoutiqueCoffee("postgres", "1");
+            db = new BoutiqueCoffee("postgres", password);
         } catch (Exception e) {
             System.out.println("Connection Failed");
             System.out.println(e.getMessage());
@@ -25,192 +33,136 @@ public class BCBenchmark {
         }
 
         db.setErrorLogger(s -> System.err.println(s));
+        db.runSqlScript("schema.sql");
+        db.runSqlScript("trigger.sql");
+        db.runSqlScript("jdbc_procedures.sql");
 
         // Stress Test Methods and Time them.
 
-        startTime = System.currentTimeMillis();
-        stressTest_getCoffees();
-        endTime = System.currentTimeMillis();
-        calcTime = endTime - startTime;
-        System.out.println("Execution time for getCoffees(): " + calcTime + " ms.");
+        benchmark(BCBenchmark::stressTest_addCoffee, 1000, "\n--- Benchmarking Add Coffees ---");
+        
+        benchmark(BCBenchmark::stressTest_addMemberLevel, 1000, "\n--- Benchmarking Add Member Levels ---");
+        
+        benchmark(BCBenchmark::stressTest_addStore, 1000, "\n--- Benchmarking Add Stores ---");
+        
+        benchmark(BCBenchmark::stressTest_offerCoffee, 1000, "\n--- Benchmarking Offer Coffees--- ");
 
-        startTime = System.currentTimeMillis();
-        stressTest_getCoffeesByKeyword();
-        endTime = System.currentTimeMillis();
-        calcTime = endTime - startTime;
-        System.out.println("Execution time for getCoffeesByKeyword(): " + calcTime + " ms.");
-
-        startTime = System.currentTimeMillis();
-        stressTest_getPointsByCustomerId();
-        endTime = System.currentTimeMillis();
-        calcTime = endTime - startTime;
-        System.out.println("Execution time for getPointsByCustomerId(): " + calcTime + " ms.");
-
-        startTime = System.currentTimeMillis();
-        stressTest_addCoffee();
-        endTime = System.currentTimeMillis();
-        calcTime = endTime - startTime;
-        System.out.println("Execution time for addCoffee(): " + calcTime + " ms.");
-
-        startTime = System.currentTimeMillis();
-        stressTest_addMemberLevel();
-        endTime = System.currentTimeMillis();
-        calcTime = endTime - startTime;
-        System.out.println("Execution time for addMemberLevel(): " + calcTime + " ms.");
-
-        startTime = System.currentTimeMillis();
-        stressTest_addStore();
-        endTime = System.currentTimeMillis();
-        calcTime = endTime - startTime;
-        System.out.println("Execution time for addStore(): " + calcTime + " ms.");
-
-        startTime = System.currentTimeMillis();
-        stressTest_offerCoffee();
-        endTime = System.currentTimeMillis();
-        calcTime = endTime - startTime;
-        System.out.println("Execution time for offerCoffee(): " + calcTime + " ms.");
-
-        startTime = System.currentTimeMillis();
-        stressTest_addCustomer();
-        endTime = System.currentTimeMillis();
-        calcTime = endTime - startTime;
-        System.out.println("Execution time for addCustomer(): " + calcTime + " ms.");
-
-        startTime = System.currentTimeMillis();
-        stressTest_addPromotion();
-        endTime = System.currentTimeMillis();
-        calcTime = endTime - startTime;
-        System.out.println("Execution time for addPromotion(): " + calcTime + " ms.");
-
-        startTime = System.currentTimeMillis();
-        stressTest_promoteFor();
-        endTime = System.currentTimeMillis();
-        calcTime = endTime - startTime;
-        System.out.println("Execution time for promoteFor(): " + calcTime + " ms.");
-
-        startTime = System.currentTimeMillis();
-        stressTest_hasPromotion();
-        endTime = System.currentTimeMillis();
-        calcTime = endTime - startTime;
-        System.out.println("Execution time for hasPromotion(): " + calcTime + " ms.");
-
-        startTime = System.currentTimeMillis();
-        stressTest_addPurchase();
-        endTime = System.currentTimeMillis();
-        calcTime = endTime - startTime;
-        System.out.println("Execution time for addPurchase(): " + calcTime + " ms.");
-
-        startTime = System.currentTimeMillis();
-        stressTest_topStores();
-        endTime = System.currentTimeMillis();
-        calcTime = endTime - startTime;
-        System.out.println("Execution time for topStores(): " + calcTime + " ms.");
-
-        startTime = System.currentTimeMillis();
-        stressTest_topCustomers();
-        endTime = System.currentTimeMillis();
-        calcTime = endTime - startTime;
-        System.out.println("Execution time for topCustomers(): " + calcTime + " ms.");
-
-
+        benchmark(BCBenchmark::stressTest_addCustomer, 1000, "\n--- Benchmarking Add Customers ---");
+        
+        benchmark(BCBenchmark::stressTest_addPromotion, 1000, "\n--- Benchmarking Add Promotions ---");
+        
+        benchmark(BCBenchmark::stressTest_promoteFor, 1000, "\n--- Benchmarking Promote For ---");
+        
+        benchmark(BCBenchmark::stressTest_hasPromotion, 1000, "\n--- Benchmarking Has Promotion ---");
+        
+        benchmark(BCBenchmark::stressTest_addPurchase, 1000, "\n--- Benchmarking Add Purchase ---");
+        
+        benchmark(BCBenchmark::stressTest_getCoffees, 1000, "\n--- Benchmarking Get Coffees ---");
+        
+        benchmark(BCBenchmark::stressTest_getCoffeesByKeyword, 1000, "\n--- Benchmarking Get Coffees By Keyword ---");
+        
+        benchmark(BCBenchmark::stressTest_getPointsByCustomerId, 1000, "\n--- Benchmarking Get Points By Customer ID ---");
+        
+        benchmark(BCBenchmark::stressTest_topStores, 1000, "\n--- Benchmarking Get Top K Stores In Past X Months ---");
+        
+        benchmark(BCBenchmark::stressTest_topCustomers, 1000, "\n--- Benchmarking Get Top K Customers In Past X Months ---");
+    }
+    
+    private static void benchmark(Consumer<Integer> function, int iterations, String message) {
+    	System.out.println(message);
+        double startTime = System.currentTimeMillis();
+        function.accept(iterations);
+        double endTime = System.currentTimeMillis();
+        double calcTime = endTime - startTime;
+        System.out.println("total execution time: " + calcTime + " ms.");
+        System.out.println("average execution time: " + calcTime/iterations + " ms.");
     }
 
-    private static void stressTest_getCoffees() {
-        System.out.println("\n--- GET COFFEES 1000 INSERTS ---");
-        //TODO
-
+    private static void stressTest_getCoffees(int iter) {
+        for (int i=0; i < iter; i++) {
+        	db.getCoffees();
+        }
     }
 
-    private static void stressTest_getCoffeesByKeyword() {
-        System.out.println("\n--- GET COFFEES BY KEYWORD ---");
-        //TODO
-
+    private static void stressTest_getCoffeesByKeyword(int iter) {
+        for (int i=0; i < iter; i++) {
+        	db.getCoffeesByKeywords("Coffee", ""+i);
+        }
     }
 
-    private static void stressTest_getPointsByCustomerId() {
-        System.out.println("\n--- GET POINTS BY CUSTOMER ID ---");
-        //TODO
-        for (int i = 1; i < 1001; i++) {
+    private static void stressTest_getPointsByCustomerId(int iter) {
+        for (int i = 1; i <= iter; i++) {
             db.getPointsByCustomerId(i);
         }
     }
 
-    private static void stressTest_addCoffee() {
-        System.out.println("\n--- ADD COFFEE 1000 Inserts ---");
-        for (int i = 0; i < 1000; i++) {
-            db.addCoffee("Coffee Name", "Description", 11, 7.79, 80, 100);
+    private static void stressTest_addCoffee(int iter) {
+        for (int i = 0; i < iter; i++) {
+            db.addCoffee("Coffee " + i, "Description", 11, 7.79, 80, 100);
         }
     }
 
-    private static void stressTest_addCustomer() {
-        System.out.println("\n--- ADD CUSTOMER 1000 Inserts ---");
-        int[] ml = new int[1001];
-        double[] pts = new double[1001];
-        for (int i = 1; i < 1001; i++) {
+    private static void stressTest_addCustomer(int iter) {
+        int[] ml = new int[iter + 1];
+        double[] pts = new double[iter + 1];
+        for (int i = 1; i <= iter; i++) {
             ml[i] = i;
         }
-        for (int j = 1; j < 1001; j++) {
+        for (int j = 1; j <= iter; j++) {
             pts[j] = j + 99;
         }
-        for (int k = 1; k < 1001; k++) {
+        for (int k = 1; k <= iter; k++) {
             db.addCustomer("FN " + k, "LN " + k, "FN.LN" + k + "@gmail.com", ml[k], pts[k]);
         }
 
     }
 
-    private static void stressTest_addMemberLevel() {
-        System.out.println("\n--- ADD MEMBER LEVEL 1000 Inserts ---");
-        for (int i = 1; i < 1001; i++) {
+    private static void stressTest_addMemberLevel(int iter) {
+        for (int i = 1; i <= iter; i++) {
             db.addMemberLevel("MemberLevel " + i, i * 2);
         }
     }
 
-    private static void stressTest_addStore() {
-        System.out.println("\n--- ADD STORE 1000 Inserts ---");
-        for (int i = 0; i < 1000; i++) {
+    private static void stressTest_addStore(int iter) {
+        for (int i = 0; i < iter; i++) {
             db.addStore("Store " + i, "Address Store " + i, "Store Type", i * 4.12, i * 2.25);
         }
     }
 
-    private static void stressTest_hasPromotion() {
-        System.out.println("\n--- HAS PROMOTION 1000 INSERTS ---");
-        for (int i = 1; i < 1001; i++) {
+    private static void stressTest_hasPromotion(int iter) {
+        for (int i = 1; i <= iter; i++) {
             db.hasPromotion(i, i);
         }
 
     }
 
-    private static void stressTest_promoteFor() {
-        System.out.println("\n--- PROMOTE FOR 1000 INSERTS ---");
-        for (int i = 1; i < 1001; i++) {
+    private static void stressTest_promoteFor(int iter) {
+        for (int i = 1; i <= iter; i++) {
             db.promoteFor(i, i);
         }
     }
 
-    private static void stressTest_addPromotion() {
-        System.out.println("\n--- ADD PROMOTION 1000 INSERTS ---");
+    private static void stressTest_addPromotion(int iter) {
         Date start = Date.valueOf("2019-07-01");
         Date end = Date.valueOf("2019-07-28");
-        for (int i = 1; i < 1001; i++) {
+        for (int i = 1; i <= iter; i++) {
             db.addPromotion("Promotion " + i, start, end);
         }
 
     }
 
-    private static void stressTest_offerCoffee() {
-        System.out.println("\n--- OFFER COFFEE 1000 INSERTS ---");
-        for (int i = 1; i < 1001; i++) {
+    private static void stressTest_offerCoffee(int iter) {
+        for (int i = 1; i <= iter; i++) {
             db.offerCoffee(i, i);
         }
 
     }
 
-    private static void stressTest_addPurchase() {
-        System.out.println("\n--- ADD PURCHASE 1000 INSERTS ---");
+    private static void stressTest_addPurchase(int iter) {
 
-        Date d = Date.valueOf("2019-07-20");
+        Date d = Date.valueOf("2019-01-20");
 
-        for (int j = 1; j < 1001; j++) {
+        for (int j = 1; j <= iter; j++) {
             List<Integer> coffees = new ArrayList<Integer>(1);
             List<Integer> purchased = new ArrayList<Integer>(1);
             List<Integer> redeemed = new ArrayList<Integer>(1);
@@ -218,20 +170,22 @@ public class BCBenchmark {
             purchased.add(j);
             coffees.add(j);
             redeemed.add(j / 100);
+            d.setMonth((j % 12) + 1);
             db.addPurchase(j, j, d, coffees, purchased, redeemed);
         }
 
     }
 
-    private static void stressTest_topStores() {
-        System.out.println("\n--- TOP SCORES ---");
-        //TODO
+    private static void stressTest_topStores(int iter) {
+        for(int i = 1; i <= iter; i++) {
+        	db.getTopKStoresInPastXMonth(i, (i % 12) + 1);
+        }
 
     }
 
-    private static void stressTest_topCustomers() {
-        System.out.println("\n--- TOP CUSTOMERS ---");
-        //TODO
-
+    private static void stressTest_topCustomers(int iter) {
+        for(int i = 1; i <= iter; i++) {
+        	db.getTopKCustomersInPastXMonth(i, (i % 12) + 1);
+        }
     }
 }

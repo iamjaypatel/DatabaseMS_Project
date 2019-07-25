@@ -106,7 +106,7 @@ public class BCApp {
             JOptionPane.showMessageDialog(null, "Invalid Username or Password!");
             System.exit(0);
         }
-        fillMemberLevelTable();
+        fillTables();
         txtFirstName.getAccessibleContext();
         int val;
         int points = 0;
@@ -134,6 +134,9 @@ public class BCApp {
         } else {
             JOptionPane.showMessageDialog(null, "Please Select Member ID");
         }
+    }
+    private void fillTables(){
+        fillMemberLevelTable();
     }
 
     private void fillMemberLevelTable() {

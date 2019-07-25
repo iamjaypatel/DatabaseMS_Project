@@ -37,6 +37,7 @@ public class BCAppDialog extends JDialog {
     private JLabel lblPtsEarn;
     private JLabel lblTotPtsEarn;
     private static BoutiqueCoffee boutiqueCoffee;
+    private String customerID;
 
     public BCAppDialog() {
         setContentPane(contentPane);
@@ -56,12 +57,11 @@ public class BCAppDialog extends JDialog {
             System.exit(0);
         }
 
-        String customerID = JOptionPane.showInputDialog("What is the Member ID?");
+        customerID = JOptionPane.showInputDialog("What is the Member ID?");
         double ret = boutiqueCoffee.getMemberID_GUI(Integer.parseInt(customerID));
         if (ret < 0) {
             JOptionPane.showMessageDialog(null, "Member Not Found");
         }
-
         String memFirstName = boutiqueCoffee.getMemberFirstName_GUI(Integer.parseInt(customerID));
         String memLastName = boutiqueCoffee.getMemberLastName_GUI(Integer.parseInt(customerID));
         lblGetCustName.setText(memFirstName + " " + memLastName);
@@ -358,7 +358,7 @@ public class BCAppDialog extends JDialog {
         int redeem = (int) spnRedeem.getValue();
         Date d = Date.valueOf("2017-07-25");
 
-        int ret = boutiqueCoffee.addPurchase_GUI(1, StoreID, d, coffeeID, quant, redeem);
+        int ret = boutiqueCoffee.addPurchase_GUI(Integer.parseInt(customerID), StoreID, d, coffeeID, quant, redeem);
         if (ret < 0) {
             JOptionPane.showMessageDialog(null, "Purchase Failed, Please Retry!");
         } else {

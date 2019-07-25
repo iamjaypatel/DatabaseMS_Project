@@ -7,6 +7,8 @@
  * @author Jay Patel and Kevin Zinn
  */
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,8 @@ import java.util.function.Consumer;
 
 public class BCBenchmark {
     private static BoutiqueCoffee db;
+    private static PrintWriter totals;
+    private static PrintWriter avgs;
 
     public static void main(String[] args) {
         String password = "";
@@ -31,41 +35,60 @@ public class BCBenchmark {
             System.out.println(e.getMessage());
             System.exit(-1);
         }
-
+        
+        try{
+        	totals = new PrintWriter("totals.dat");
+        	avgs = new PrintWriter("averages.dat");
+        }catch(Exception e) {
+        	System.out.println("Could not create file");
+        	System.out.println(e.getMessage());
+        	System.exit(-1);
+        }
+        
         db.setErrorLogger(s -> System.err.println(s));
+        
+        executeBenchmarks(100);
+        executeBenchmarks(1000);
+        executeBenchmarks(10000);
+        
+
+    	if(totals != null) {
+    		totals.flush();
+    		totals.close();
+    	}
+    	if(avgs != null) {
+    		avgs.flush();
+    		avgs.close();
+    	}
+    }
+    
+    public static void executeBenchmarks(int iters) {        
         db.runSqlScript("schema.sql");
         db.runSqlScript("trigger.sql");
         db.runSqlScript("jdbc_procedures.sql");
 
         // Stress Test Methods and Time them.
+        
+        totals.write(iters);
+        avgs.write(iters);
 
-        benchmark(BCBenchmark::stressTest_addCoffee, 1000, "\n--- Benchmarking Add Coffees ---");
+        benchmark(BCBenchmark::stressTest_addCoffee, iters, "\n--- Benchmarking Add Coffees ---");
+        benchmark(BCBenchmark::stressTest_addMemberLevel, iters, "\n--- Benchmarking Add Member Levels ---");
+        benchmark(BCBenchmark::stressTest_addStore, iters, "\n--- Benchmarking Add Stores ---");
+        benchmark(BCBenchmark::stressTest_offerCoffee, iters, "\n--- Benchmarking Offer Coffees--- ");
+        benchmark(BCBenchmark::stressTest_addCustomer, iters, "\n--- Benchmarking Add Customers ---");
+        benchmark(BCBenchmark::stressTest_addPromotion, iters, "\n--- Benchmarking Add Promotions ---");
+        benchmark(BCBenchmark::stressTest_promoteFor, iters, "\n--- Benchmarking Promote For ---");
+        benchmark(BCBenchmark::stressTest_hasPromotion, iters, "\n--- Benchmarking Has Promotion ---");
+        benchmark(BCBenchmark::stressTest_addPurchase, iters, "\n--- Benchmarking Add Purchase ---");
+        benchmark(BCBenchmark::stressTest_getCoffees, iters, "\n--- Benchmarking Get Coffees ---");
+        benchmark(BCBenchmark::stressTest_getCoffeesByKeyword, iters, "\n--- Benchmarking Get Coffees By Keyword ---");
+        benchmark(BCBenchmark::stressTest_getPointsByCustomerId, iters, "\n--- Benchmarking Get Points By Customer ID ---");
+        benchmark(BCBenchmark::stressTest_topStores, iters, "\n--- Benchmarking Get Top K Stores In Past X Months ---");
+        benchmark(BCBenchmark::stressTest_topCustomers, iters, "\n--- Benchmarking Get Top K Customers In Past X Months ---");
         
-        benchmark(BCBenchmark::stressTest_addMemberLevel, 1000, "\n--- Benchmarking Add Member Levels ---");
-        
-        benchmark(BCBenchmark::stressTest_addStore, 1000, "\n--- Benchmarking Add Stores ---");
-        
-        benchmark(BCBenchmark::stressTest_offerCoffee, 1000, "\n--- Benchmarking Offer Coffees--- ");
-
-        benchmark(BCBenchmark::stressTest_addCustomer, 1000, "\n--- Benchmarking Add Customers ---");
-        
-        benchmark(BCBenchmark::stressTest_addPromotion, 1000, "\n--- Benchmarking Add Promotions ---");
-        
-        benchmark(BCBenchmark::stressTest_promoteFor, 1000, "\n--- Benchmarking Promote For ---");
-        
-        benchmark(BCBenchmark::stressTest_hasPromotion, 1000, "\n--- Benchmarking Has Promotion ---");
-        
-        benchmark(BCBenchmark::stressTest_addPurchase, 1000, "\n--- Benchmarking Add Purchase ---");
-        
-        benchmark(BCBenchmark::stressTest_getCoffees, 1000, "\n--- Benchmarking Get Coffees ---");
-        
-        benchmark(BCBenchmark::stressTest_getCoffeesByKeyword, 1000, "\n--- Benchmarking Get Coffees By Keyword ---");
-        
-        benchmark(BCBenchmark::stressTest_getPointsByCustomerId, 1000, "\n--- Benchmarking Get Points By Customer ID ---");
-        
-        benchmark(BCBenchmark::stressTest_topStores, 1000, "\n--- Benchmarking Get Top K Stores In Past X Months ---");
-        
-        benchmark(BCBenchmark::stressTest_topCustomers, 1000, "\n--- Benchmarking Get Top K Customers In Past X Months ---");
+        totals.write("\n");
+        avgs.write("\n");
     }
     
     private static void benchmark(Consumer<Integer> function, int iterations, String message) {
@@ -75,7 +98,10 @@ public class BCBenchmark {
         double endTime = System.currentTimeMillis();
         double calcTime = endTime - startTime;
         System.out.println("total execution time: " + calcTime + " ms.");
-        System.out.println("average execution time: " + calcTime/iterations + " ms.");
+        totals.print("," + calcTime);
+        double average = calcTime/iterations;
+        avgs.print("," + average);
+        System.out.println("average execution time: " + average + " ms.");
     }
 
     private static void stressTest_getCoffees(int iter) {

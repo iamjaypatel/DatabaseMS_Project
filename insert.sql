@@ -26,64 +26,64 @@ VALUES (DEFAULT, 'Diamond', 1.89);
 
 -- CUSTOMERS TABLE
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Jerimiah', 'Heath', 'HJ234@coffee.com', 1, 10);
+VALUES (DEFAULT, 'Jerimiah', 'Heath', 'HJ234@coffee.com', 1, 100);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Weston', 'Riggs', 'RW543@coffee.com', 2, 30);
+VALUES (DEFAULT, 'Weston', 'Riggs', 'RW543@coffee.com', 2, 300);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Cyrus', 'Rangel', 'RC264@coffee.com', 3, 45);
+VALUES (DEFAULT, 'Cyrus', 'Rangel', 'RC264@coffee.com', 3, 450);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Alberto', 'Hansen', 'HA121@coffee.com', 4, 90);
+VALUES (DEFAULT, 'Alberto', 'Hansen', 'HA121@coffee.com', 4, 900);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Roberto', 'Mooney', 'MR980@coffee.com', 1, 34);
+VALUES (DEFAULT, 'Roberto', 'Mooney', 'MR980@coffee.com', 1, 340);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Lucy', 'Mcclain', 'ML324@coffee.com', 3, 45);
+VALUES (DEFAULT, 'Lucy', 'Mcclain', 'ML324@coffee.com', 3, 450);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Leah', 'Roberson', 'RL567@coffee.com', 2, 67);
+VALUES (DEFAULT, 'Leah', 'Roberson', 'RL567@coffee.com', 2, 670);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Jorge', 'Frank', 'FJ890@coffee.com', 4, 34);
+VALUES (DEFAULT, 'Jorge', 'Frank', 'FJ890@coffee.com', 4, 340);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Hanna', 'Belvins', 'BH012@coffee.com', 3, 23);
+VALUES (DEFAULT, 'Hanna', 'Belvins', 'BH012@coffee.com', 3, 230);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'India', 'Byrd', 'BI345@coffee.com', 4, 56);
+VALUES (DEFAULT, 'India', 'Byrd', 'BI345@coffee.com', 4, 560);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Danika', 'Robbins', 'RD678@coffee.com', 1, 43);
+VALUES (DEFAULT, 'Danika', 'Robbins', 'RD678@coffee.com', 1, 430);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Urijah', 'Ochoa', 'OU901@coffee.com', 1, 31);
+VALUES (DEFAULT, 'Urijah', 'Ochoa', 'OU901@coffee.com', 1, 310);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Emely', 'Carney', 'CE258@coffee.com', 2, 29);
+VALUES (DEFAULT, 'Emely', 'Carney', 'CE258@coffee.com', 2, 290);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Rene', 'Fletcher', 'FR369@coffee.com', 3, 89);
+VALUES (DEFAULT, 'Rene', 'Fletcher', 'FR369@coffee.com', 3, 890);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Janiya', 'Terrell', 'TJ401@coffee.com', 1, 72);
+VALUES (DEFAULT, 'Janiya', 'Terrell', 'TJ401@coffee.com', 1, 720);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Allen', 'Hood', 'HA803@coffee.com', 2, 74);
+VALUES (DEFAULT, 'Allen', 'Hood', 'HA803@coffee.com', 2, 740);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Luna', 'Martin', 'ML712@coffee.com', 1, 26);
+VALUES (DEFAULT, 'Luna', 'Martin', 'ML712@coffee.com', 1, 260);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Simon', 'Lucero', 'LS306@coffee.com', 2, 98);
+VALUES (DEFAULT, 'Simon', 'Lucero', 'LS306@coffee.com', 2, 980);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Edith', 'Rollins', 'RE603@coffee.com', 4, 97);
+VALUES (DEFAULT, 'Edith', 'Rollins', 'RE603@coffee.com', 4, 970);
 
 INSERT INTO boutique_coffee.customer(customer_id, first_name, last_name, email, memberlevel_id, total_points)
-VALUES (DEFAULT, 'Kyler', 'Gilbert', 'GK161@coffee.com', 3, 21);
+VALUES (DEFAULT, 'Kyler', 'Gilbert', 'GK161@coffee.com', 3, 210);
 
 -- PURCHASE TABLE
 INSERT INTO boutique_coffee.purchase(purchase_id, customer_id, store_id, purchase_time)
@@ -454,3 +454,5 @@ VALUES (49, 6, 2, 1);
 
 INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity)
 VALUES (50, 6, 3, 1);
+
+

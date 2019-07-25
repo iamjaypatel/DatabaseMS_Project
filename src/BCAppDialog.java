@@ -144,7 +144,7 @@ public class BCAppDialog extends JDialog {
                 tabbedPane1.setEnabledAt(2, true);
                 tabbedPane1.setSelectedIndex(2);
                 btnPurchase.setEnabled(true);
-                SpinnerNumberModel quantitylimit = new SpinnerNumberModel(0, 1, 9, 1);
+                SpinnerNumberModel quantitylimit = new SpinnerNumberModel(1, 1, 9, 1);
                 SpinnerNumberModel redeemlimit = new SpinnerNumberModel(0, 0, 1, 1);
                 spnQuantity.setModel(quantitylimit);
                 spnRedeem.setModel(redeemlimit);

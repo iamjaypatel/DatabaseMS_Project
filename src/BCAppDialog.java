@@ -46,20 +46,27 @@ public class BCAppDialog extends JDialog {
         tabbedPane1.setEnabledAt(1, false);
         tabbedPane1.setEnabledAt(2, false);
 
+        String userName = JOptionPane.showInputDialog("Please enter Username of  your postgres database!");
+        String password = JOptionPane.showInputDialog("Enter Password!");
+
         try {
-            boutiqueCoffee = new BoutiqueCoffee("postgres", "1");
+            boutiqueCoffee = new BoutiqueCoffee(userName, password);
         } catch (Exception e) {
-            System.out.println("Connection Failed");
-            System.out.println(e.getMessage());
-            System.exit(-1);
+            JOptionPane.showMessageDialog(null, "Invalid Username or Password!");
+            System.exit(0);
         }
 
-        int customerID = 1;
-        String memFirstName = boutiqueCoffee.getMemberFirstName_GUI(customerID);
-        String memLastName = boutiqueCoffee.getMemberLastName_GUI(customerID);
+        String customerID = JOptionPane.showInputDialog("What is the Member ID?");
+        double ret = boutiqueCoffee.getMemberID_GUI(Integer.parseInt(customerID));
+        if (ret < 0) {
+            JOptionPane.showMessageDialog(null, "Member Not Found");
+        }
+
+        String memFirstName = boutiqueCoffee.getMemberFirstName_GUI(Integer.parseInt(customerID));
+        String memLastName = boutiqueCoffee.getMemberLastName_GUI(Integer.parseInt(customerID));
         lblGetCustName.setText(memFirstName + " " + memLastName);
         //Set up Points
-        double pts = boutiqueCoffee.getPointsByCustomerId(customerID);
+        double pts = boutiqueCoffee.getPointsByCustomerId(Integer.parseInt(customerID));
         lblGetCustPts.setText(Double.toString(pts));
 
         btnPurchase.addActionListener(new ActionListener() {
@@ -295,7 +302,8 @@ public class BCAppDialog extends JDialog {
             }
         }
     }
-    private void clearLabels(){
+
+    private void clearLabels() {
         lblGetDesc.setText("");
         lblGetIntensity.setText("");
         lblPrice.setText("");
@@ -306,11 +314,12 @@ public class BCAppDialog extends JDialog {
         lblTotPtsEarn.setText("");
     }
 
-    private void setLabels(){
+    private void setLabels() {
         lblPtsEarn.setText("Earn: ");
         lblptsRedeem.setText("Redeem For:");
         lblPrice.setText("Price ($):");
     }
+
     private void purchase() {
         int StoreID = 0;
         if (radStarbucks.isSelected()) {

@@ -476,29 +476,6 @@ class BoutiqueCoffee implements ITransactionManager {
         return results;
     }
 
-    // Returns Member ID if found. else returns -1.
-    public double getMemberID(int memberID) {
-        double val;
-        String QSgetMemberID = "SELECT customer_id FROM boutique_coffee.customer WHERE customer_id = ?";
-        try {
-            PreparedStatement statement = conn.prepareStatement(QSgetMemberID);
-            statement.setInt(1, memberID);
-            ResultSet values = statement.executeQuery();
-
-            if (values.next()) {
-                val = values.getDouble(1);
-            } else {
-                val = -1;
-            }
-        } catch (SQLException e) {
-            logException(e);
-            val = -1;
-        } catch (Exception e) {
-            val = -1;
-        }
-        return val;
-    }
-
     private void logException(SQLException e) {
         error_logger.accept("SQL ERROR");
         while (e != null) {
@@ -552,4 +529,116 @@ class BoutiqueCoffee implements ITransactionManager {
             logException(e);
         }
     }
+
+    /*****************************************************************
+     *           FUNCTIONS FOR GUI EXTRA CREDIT STARTS HERE          *
+     *****************************************************************/
+
+    public int addPurchase_GUI(int customerId, int storeId, Date dateNow, int coffeeIds, int purchaseQuantities, int redeemQuantities) {
+        int val = -1;
+        String purchaseString = "INSERT INTO boutique_coffee.purchase(customer_id, store_id, purchase_time) VALUES (?, ?, ?)";
+        String coffeeString = "INSERT INTO boutique_coffee.buycoffee(purchase_id, coffee_id, purchase_quantity, redeem_quantity) VALUES (?, ?, ?, ?)";
+        String fieldName = "purchase_id";
+        PreparedStatement stmt;
+        try {
+            stmt = conn.prepareStatement(purchaseString, new String[]{fieldName});
+            stmt.setInt(1, customerId);
+            stmt.setInt(2, storeId);
+            stmt.setDate(3, dateNow);
+
+            int rows = stmt.executeUpdate();
+            if (rows == 0) {
+                throw new SQLException("Add Purchase Failed, no rows affected in purchase table");
+            }
+
+            ResultSet values = stmt.getGeneratedKeys();
+            if (values.next()) {
+                val = values.getInt(1);
+            }
+
+            stmt = conn.prepareStatement(coffeeString);
+            stmt.setInt(1, val);
+            stmt.setInt(2, coffeeIds);
+            stmt.setInt(3, purchaseQuantities);
+            stmt.setInt(4, redeemQuantities);
+
+            rows = stmt.executeUpdate();
+            if (rows == 0) {
+                throw new SQLException("Add Purchase Failed, no rows affected in buyCoffee table");
+            }
+
+        } catch (SQLException e){
+            logException(e);
+            val = -1;
+        }
+        return val;
+    }
+
+    // Returns Member ID if found. else returns -1.
+    public double getMemberID_GUI(int memberID) {
+        double val;
+        String QSgetMemberID = "SELECT customer_id FROM boutique_coffee.customer WHERE customer_id = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(QSgetMemberID);
+            statement.setInt(1, memberID);
+            ResultSet values = statement.executeQuery();
+
+            if (values.next()) {
+                val = values.getDouble(1);
+            } else {
+                val = -1;
+            }
+        } catch (SQLException e) {
+            logException(e);
+            val = -1;
+        } catch (Exception e) {
+            val = -1;
+        }
+        return val;
+    }
+
+    public String getMemberFirstName_GUI(int memberID) {
+        String val;
+        String QSgetMemberID = "SELECT first_name FROM boutique_coffee.customer WHERE customer_id = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(QSgetMemberID);
+            statement.setInt(1, memberID);
+            ResultSet values = statement.executeQuery();
+
+            if (values.next()) {
+                val = values.getString("first_name");
+            } else {
+                val = "Not Found";
+            }
+        } catch (SQLException e) {
+            logException(e);
+            val = "Not Found";
+        } catch (Exception e) {
+            val = "Not Found";
+        }
+        return val;
+    }
+
+    public String getMemberLastName_GUI(int memberID) {
+        String val;
+        String QSgetMemberID = "SELECT last_name FROM boutique_coffee.customer WHERE customer_id = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(QSgetMemberID);
+            statement.setInt(1, memberID);
+            ResultSet values = statement.executeQuery();
+
+            if (values.next()) {
+                val = values.getString("last_name");
+            } else {
+                val = "Not Found";
+            }
+        } catch (SQLException e) {
+            logException(e);
+            val = "Not Found";
+        } catch (Exception e) {
+            val = "Not Found";
+        }
+        return val;
+    }
+
 }

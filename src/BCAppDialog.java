@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 
 public class BCAppDialog extends JDialog {
     private JPanel contentPane;
@@ -29,6 +32,10 @@ public class BCAppDialog extends JDialog {
     private JButton btnBackQuant;
     private JComboBox cbSelectCoffee;
     private JLabel lblGetIntensity;
+    private JLabel lblptsRedeem;
+    private JLabel lblTotPtsRedeem;
+    private JLabel lblPtsEarn;
+    private JLabel lblTotPtsEarn;
     private static BoutiqueCoffee boutiqueCoffee;
 
     public BCAppDialog() {
@@ -39,20 +46,25 @@ public class BCAppDialog extends JDialog {
         tabbedPane1.setEnabledAt(1, false);
         tabbedPane1.setEnabledAt(2, false);
 
+        try {
+            boutiqueCoffee = new BoutiqueCoffee("postgres", "1");
+        } catch (Exception e) {
+            System.out.println("Connection Failed");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+
+        int customerID = 1;
+        String memFirstName = boutiqueCoffee.getMemberFirstName_GUI(customerID);
+        String memLastName = boutiqueCoffee.getMemberLastName_GUI(customerID);
+        lblGetCustName.setText(memFirstName + " " + memLastName);
+        //Set up Points
+        double pts = boutiqueCoffee.getPointsByCustomerId(customerID);
+        lblGetCustPts.setText(Double.toString(pts));
+
         btnPurchase.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int StoreID = 0;
-                if (radStarbucks.isSelected()) {
-                    StoreID = 1;
-                } else if (radDunkin.isSelected()) {
-                    StoreID = 2;
-                } else if (radCrazyMocha.isSelected()) {
-                    StoreID = 3;
-                } else {
-                    JOptionPane.showMessageDialog(null, "Select Appropriate Store");
-                }
-                //boutiqueCoffee.addPurchase(custid, StoreID, Date, coffe, quant, redeem);
-                dispose();
+                purchase();
             }
         });
 
@@ -125,7 +137,7 @@ public class BCAppDialog extends JDialog {
                 tabbedPane1.setEnabledAt(2, true);
                 tabbedPane1.setSelectedIndex(2);
                 btnPurchase.setEnabled(true);
-                SpinnerNumberModel quantitylimit = new SpinnerNumberModel(0, 0, 9, 1);
+                SpinnerNumberModel quantitylimit = new SpinnerNumberModel(0, 1, 9, 1);
                 SpinnerNumberModel redeemlimit = new SpinnerNumberModel(0, 0, 1, 1);
                 spnQuantity.setModel(quantitylimit);
                 spnRedeem.setModel(redeemlimit);
@@ -220,57 +232,128 @@ public class BCAppDialog extends JDialog {
     }
 
     private void cbAction() {
+        int coffeeID;
         if (radStarbucks.isSelected()) {
             if (cbSelectCoffee.getSelectedIndex() == 0) {
+                coffeeID = 1;
                 lblGetDesc.setText("Brewed Coffee w/Milk");
                 lblGetIntensity.setText("Intensity: 5");
-                lblPrice.setText("Price ($)");
                 lblGetPrice.setText("3.95");
+                lblTotPtsRedeem.setText("50 Points");
+                lblTotPtsEarn.setText("35 Points");
+                setLabels();
             } else if (cbSelectCoffee.getSelectedIndex() == 1) {
+                coffeeID = 2;
                 lblGetDesc.setText("Ice Brewed Coffee");
                 lblGetIntensity.setText("Intensity: 3");
-                lblPrice.setText("Price ($)");
                 lblGetPrice.setText("4.95");
+                lblTotPtsRedeem.setText("60 Points");
+                lblTotPtsEarn.setText("45 Points");
+                setLabels();
             } else {
-                lblGetDesc.setText("");
-                lblGetIntensity.setText("");
-                lblPrice.setText("");
-                lblGetPrice.setText("");
+                clearLabels();
             }
         } else if (radDunkin.isSelected()) {
             if (cbSelectCoffee.getSelectedIndex() == 0) {
+                coffeeID = 3;
                 lblGetDesc.setText("Vanilla Flavor");
                 lblGetIntensity.setText("Intensity: 5");
-                lblPrice.setText("Price ($)");
                 lblGetPrice.setText("2.99");
+                lblTotPtsRedeem.setText("35 Points");
+                lblTotPtsEarn.setText("20 Points");
+                setLabels();
             } else if (cbSelectCoffee.getSelectedIndex() == 1) {
+                coffeeID = 4;
                 lblGetDesc.setText("Dark Roast w/ Mocha");
                 lblGetIntensity.setText("Intensity: 7");
-                lblPrice.setText("Price ($)");
                 lblGetPrice.setText("4.99");
+                lblTotPtsRedeem.setText("65 Points");
+                lblTotPtsEarn.setText("50 Points");
+                setLabels();
             } else {
-                lblGetDesc.setText("");
-                lblGetIntensity.setText("");
-                lblPrice.setText("");
-                lblGetPrice.setText("");
+                clearLabels();
             }
         } else if (radCrazyMocha.isSelected()) {
             if (cbSelectCoffee.getSelectedIndex() == 0) {
+                coffeeID = 5;
                 lblGetDesc.setText("Coffee Blend");
                 lblGetIntensity.setText("Intensity: 6");
-                lblPrice.setText("Price ($)");
                 lblGetPrice.setText("5.49");
+                lblTotPtsRedeem.setText("70 Points");
+                lblTotPtsEarn.setText("55 Points");
+                setLabels();
             } else if (cbSelectCoffee.getSelectedIndex() == 1) {
+                coffeeID = 6;
                 lblGetDesc.setText("Iced Coffee");
                 lblGetIntensity.setText("Intensity: 2");
-                lblPrice.setText("Price ($)");
                 lblGetPrice.setText("3.49");
+                lblTotPtsRedeem.setText("30 Points");
+                lblTotPtsEarn.setText("15 Points");
+                setLabels();
             } else {
-                lblGetDesc.setText("");
-                lblGetIntensity.setText("");
-                lblPrice.setText("");
-                lblGetPrice.setText("");
+                clearLabels();
             }
+        }
+    }
+    private void clearLabels(){
+        lblGetDesc.setText("");
+        lblGetIntensity.setText("");
+        lblPrice.setText("");
+        lblGetPrice.setText("");
+        lblptsRedeem.setText("");
+        lblTotPtsRedeem.setText("");
+        lblPtsEarn.setText("");
+        lblTotPtsEarn.setText("");
+    }
+
+    private void setLabels(){
+        lblPtsEarn.setText("Earn: ");
+        lblptsRedeem.setText("Redeem For:");
+        lblPrice.setText("Price ($):");
+    }
+    private void purchase() {
+        int StoreID = 0;
+        if (radStarbucks.isSelected()) {
+            StoreID = 1;
+        } else if (radDunkin.isSelected()) {
+            StoreID = 2;
+        } else if (radCrazyMocha.isSelected()) {
+            StoreID = 3;
+        } else {
+            JOptionPane.showMessageDialog(null, "Error in Store Selection");
+        }
+        int coffeeID = 0;
+        if (radStarbucks.isSelected()) {
+            if (cbSelectCoffee.getSelectedIndex() == 0) {
+                coffeeID = 1;
+            } else if (cbSelectCoffee.getSelectedIndex() == 1) {
+                coffeeID = 2;
+            }
+        } else if (radDunkin.isSelected()) {
+            if (cbSelectCoffee.getSelectedIndex() == 0) {
+                coffeeID = 3;
+            } else if (cbSelectCoffee.getSelectedIndex() == 1) {
+                coffeeID = 4;
+            }
+        } else if (radCrazyMocha.isSelected()) {
+            if (cbSelectCoffee.getSelectedIndex() == 0) {
+                coffeeID = 5;
+
+            } else if (cbSelectCoffee.getSelectedIndex() == 1) {
+                coffeeID = 6;
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Error in Coffee ID");
+        }
+        int quant = (int) spnQuantity.getValue();
+        int redeem = (int) spnRedeem.getValue();
+        Date d = Date.valueOf("2017-07-25");
+
+        int ret = boutiqueCoffee.addPurchase_GUI(1, StoreID, d, coffeeID, quant, redeem);
+        if (ret < 0) {
+            JOptionPane.showMessageDialog(null, "Purchase Failed, Please Retry!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Thank you for your purchase. Your Purchase ID is: " + ret + ".");
         }
     }
 }

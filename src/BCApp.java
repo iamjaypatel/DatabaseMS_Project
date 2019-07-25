@@ -17,7 +17,7 @@ public class BCApp {
     private JButton btnFindMemID;
     private JLabel lblMemberID;
     private JLabel lblRetMemID;
-    public JLabel lblretValMemID;
+    private JLabel lblretValMemID;
     private JRadioButton radExisting;
     private JRadioButton radNewMember;
     private JComboBox cbMemberLvl;
@@ -90,12 +90,13 @@ public class BCApp {
             public void actionPerformed(ActionEvent e) {
                 double ret;
                 txtMemberID.getAccessibleContext();
-                ret = boutiqueCoffee.getMemberID(Integer.parseInt(txtMemberID.getText()));
+                ret = boutiqueCoffee.getMemberID_GUI(Integer.parseInt(txtMemberID.getText()));
                 lblretValMemID.setText(Double.toString(ret));
 
                 if (ret != -1.0) {
                     lblRetMemID.setVisible(true);
                     lblretValMemID.setVisible(true);
+
                     BCAppDialog dialog = new BCAppDialog();
                     dialog.pack();
                     dialog.setVisible(true);

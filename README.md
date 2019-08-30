@@ -1,2 +1,1 @@
-# CS1555
-Databases Project
+# CS1555 Database Project
